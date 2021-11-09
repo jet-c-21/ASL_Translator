@@ -1,0 +1,23 @@
+# jupyter
+ipykernel
+
+
+# data process
+numpy
+pandas
+
+
+# visualization
+plotly
+nbformat
+matplotlib
+seaborn
+
+
+# image
+imutils
+opencv-contrib-python
+
+
+# basic tool
+tqdm
