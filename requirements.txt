@@ -20,7 +20,8 @@ seaborn
 # image
 imutils
 opencv-contrib-python
-
+mediapipe
+scikit-image
 
 # basic tool
 tqdm
