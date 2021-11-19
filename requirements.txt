@@ -10,6 +10,7 @@ pandas
 # model training
 tensorflow
 
+
 # visualization
 plotly
 nbformat
@@ -22,6 +23,7 @@ imutils
 opencv-contrib-python
 mediapipe
 scikit-image
+
 
 # basic tool
 tqdm

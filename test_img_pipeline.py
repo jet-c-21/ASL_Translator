@@ -7,18 +7,17 @@ Create Date: 11/18/21
 from image_pipeline import *
 from cv2 import cv2
 import numpy as np
+from image_pipeline import pipe_1
 
-image_path = 'img_for_dev/A1.jpg'
+# image_path = 'img_for_dev/A1.jpg'
+image_path = 'img_for_dev/peace.jpg'
 
 
-def show_image(image: np.ndarray):
-    cv2.imshow('', image)
+def show_img(image: np.ndarray, widow_name=''):
+    cv2.imshow(widow_name, image)
     cv2.waitKey(0)
 
 
 if __name__ == '__main__':
-    image_raw = cv2.imread(image_path)
-    hand_roi = fetch_single_hand_roi(image_raw)
-
-    hr_gray = grayscale(hand_roi)
-    show_image(hr_gray)
+    # image_raw = cv2.imread(image_path)
+    pipe_1(image_path)
