@@ -4,7 +4,7 @@ GitHub: https://github.com/jet-c-21
 Create Date: 11/18/21
 """
 # coding: utf-8
-from image_pipeline import fetch_hand_roi
+from image_pipeline import *
 from cv2 import cv2
 import numpy as np
 
@@ -18,7 +18,7 @@ def show_image(image: np.ndarray):
 
 if __name__ == '__main__':
     image_raw = cv2.imread(image_path)
-    img1, img2 = fetch_hand_roi(image_raw, bg=1)
+    hand_roi = fetch_single_hand_roi(image_raw)
 
-    show_image(img1)
-    show_image(img2)
+    hr_gray = grayscale(hand_roi)
+    show_image(hr_gray)

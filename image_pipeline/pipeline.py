@@ -201,3 +201,36 @@ def da_add_noise(image, mode='s&p'):
         noised_image = random_noise(image, mode=mode)
         noised_image = np.array(255 * noised_image, dtype='uint8')
         return noised_image
+
+
+def da_filter(image: np.ndarray, mode='blur', k_size=7) -> np.ndarray:
+    if mode == 'blur':
+        return cv2.medianBlur(image, k_size)
+
+    elif mode == 'laplacian':
+        return cv2.Laplacian(image, cv2.CV_64F)
+
+    elif mode == 'sobelx':
+        return cv2.Sobel(image, cv2.CV_64F, 1, 0, ksize=k_size)
+
+    elif mode == 'sobely':
+        return cv2.Sobel(image, cv2.CV_64F, 0, 1, ksize=k_size)
+
+
+def da_dilation(image: np.ndarray, k_size=5, iterations=1) -> np.ndarray:
+    kernel = np.ones((k_size, k_size), np.uint8)
+    return cv2.dilate(image, kernel=kernel, iterations=iterations)
+
+
+def da_erosion(image: np.ndarray, k_size=5, iterations=1) -> np.ndarray:
+    kernel = np.ones((k_size, k_size), np.uint8)
+    return cv2.erode(image, kernel=kernel, iterations=iterations)
+
+
+def grayscale(image: np.ndarray) -> np.ndarray:
+    return cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+
+
+def resize(image: np.ndarray, scale) -> np.ndarray:
+    dim_size = (int(image.shape[1] * scale), int(image.shape[0] * scale))
+    return cv2.resize(image, dim_size, interpolation=cv2.INTER_AREA)
