@@ -27,4 +27,18 @@
 #### Channel-Norm: grayscale
 
 #### Resolution-Norm: resize
-    
+
+## Pipeline Naming Convention
+
+#### Type-A
+this type of pipeline doesn't contain any data augmentation structure
+```python
+pipeline_#() : return np.ndarray
+```
+
+#### Type-B
+this type of pipeline contains data augmentation structure
+```python
+pipeline_da_#() : return [np.ndarray, ..., np.ndarray]
+```
+
