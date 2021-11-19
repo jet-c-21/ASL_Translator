@@ -1,7 +1,3 @@
-<style type="text/css">
-    ol { list-style-type: lower-alpha; }
-</style>
-
 # ASL Translator
 
 ![ASL Schematic Diagram](https://i.imgur.com/mq20CVv.png)
@@ -16,11 +12,19 @@
 - Illumination-Norm: RGB-to-HSV
 
 #### Data-Aug:
-a. rotate
-b. flip
-c. noise
-d. filter
-e. dilation 
-f. erosion
-z. STL
+1. rotate
+2. flip
+3. noise
+4. filter
+5. dilation 
+6. erosion
+7. STL
+
+#### Background-Norm:
+1. bg_normalization_red_channel()
+2. bg_normalization_fg_extraction()
+
+#### Channel-Norm: grayscale
+
+#### Resolution-Norm: resize
     
