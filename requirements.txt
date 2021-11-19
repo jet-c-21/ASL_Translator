@@ -7,6 +7,9 @@ numpy
 pandas
 
 
+# model training
+tensorflow
+
 # visualization
 plotly
 nbformat
@@ -17,7 +20,8 @@ seaborn
 # image
 imutils
 opencv-contrib-python
-
+mediapipe
+scikit-image
 
 # basic tool
 tqdm
