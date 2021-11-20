@@ -20,10 +20,12 @@ def show_img(image: np.ndarray, widow_name=''):
 
 if __name__ == '__main__':
     # image_raw = cv2.imread(image_path)
+    hdt = HandDetector()
+
     bgr = BgRemover()
     bgr.load_model()
 
-    aug_img_ls = t_pipeline_with_da_2(image_path, bgr)
+    aug_img_ls = t_pipeline_with_da_2(image_path, hdt, bgr)
     for i in aug_img_ls:
         show_img(i)
     # show_img(norm_hand)

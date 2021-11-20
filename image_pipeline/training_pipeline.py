@@ -9,15 +9,15 @@ import numpy as np
 
 from image_pipeline.preprocessing.ult import get_img_ndarray, show_img
 from .preprocessing import fetch_single_hand_roi, rgb_to_hsv, grayscale, resize, bg_normalization_red_channel, \
-    bg_normalization_fg_extraction, BgRemover, remove_bg, da_rotate, da_filter, da_add_noise, da_dilation, da_erosion, \
-    has_single_hand
+    bg_normalization_fg_extraction, HandDetector, BgRemover, remove_bg, da_rotate, da_filter, da_add_noise, da_dilation, \
+    da_erosion, has_single_hand
 from .general_pipeline import roi_normalize, bg_normalize, illumination_normalize, channel_normalize, \
     resolution_normalize
 
 from tqdm import tqdm
 
 
-def t_pipeline_a(image: Union[np.ndarray, str], bgr: BgRemover, img_size=28):
+def t_pipeline_a(image: Union[np.ndarray, str], hdt: HandDetector, bgr: BgRemover, img_size=28):
     # load image
     image = get_img_ndarray(image)
     if image is None:
@@ -28,12 +28,12 @@ def t_pipeline_a(image: Union[np.ndarray, str], bgr: BgRemover, img_size=28):
     # process image
     image = bg_normalize(image, bgr)
 
-    if not has_single_hand(image):
+    if not has_single_hand(image, hdt):
         msg = f"[PIPE-WARN] - failed to pass t_pipeline_a. By: can't detect any hand after bg_remove"
         print(msg)
         return
 
-    image = roi_normalize(image)
+    image = roi_normalize(image, hdt)
     if image is None:
         msg = f"[PIPE-WARN] - failed to pass t_pipeline_a. By: failed to get after bg_remove"
         print(msg)
@@ -52,7 +52,7 @@ def t_pipeline_a(image: Union[np.ndarray, str], bgr: BgRemover, img_size=28):
     return image
 
 
-def t_pipeline_with_da_1(image: Union[np.ndarray, str], bgr: BgRemover, img_size=28):
+def t_pipeline_with_da_1(image: Union[np.ndarray, str], hdt: HandDetector, bgr: BgRemover, img_size=28):
     img_original_ls = list()
     img_output_ls = list()
 
@@ -91,7 +91,7 @@ def t_pipeline_with_da_1(image: Union[np.ndarray, str], bgr: BgRemover, img_size
     img_original_ls.append(da_dilation(image))
 
     for img in img_original_ls:
-        aug_img = t_pipeline_a(img, bgr)
+        aug_img = t_pipeline_a(img, hdt, bgr)
         if aug_img is not None:
             show_img(aug_img)
         # img_output_ls.append()
@@ -101,7 +101,8 @@ def t_pipeline_with_da_1(image: Union[np.ndarray, str], bgr: BgRemover, img_size
     #     show_img(b)
 
 
-def t_pipeline_with_da_2(image: Union[np.ndarray, str], bgr: BgRemover, img_size=28) -> Union[list, None]:
+def t_pipeline_with_da_2(image: Union[np.ndarray, str], hdt: HandDetector,
+                         bgr: BgRemover, img_size=28) -> Union[list, None]:
     img_base_with_deg = list()
     img_output_ls = list()
 
@@ -111,7 +112,7 @@ def t_pipeline_with_da_2(image: Union[np.ndarray, str], bgr: BgRemover, img_size
         print(msg)
         return
 
-    base_image = roi_normalize(image)
+    base_image = roi_normalize(image, hdt)
     if base_image is None:
         return
 

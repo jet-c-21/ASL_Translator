@@ -139,7 +139,7 @@ def bg_normalization_fg_extraction(image, min_area=.0005) -> np.ndarray:
 
     # Add relevant contours to mask
     for contour in contour_info:
-        if contour[1] > min_area and contour[1] < max_area:
+        if min_area < contour[1] < max_area:
             mask = cv2.fillConvexPoly(mask, contour[0], 255)
             # show('inter', mask)
 

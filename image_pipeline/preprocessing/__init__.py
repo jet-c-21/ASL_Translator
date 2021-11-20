@@ -3,7 +3,7 @@ from .ult import ls_to_chunks, show_img, img_show, img_plt_save, get_img_ndarray
 
 from .tk_gen import gen_random_token
 
-from image_pipeline.preprocessing.cls.bg_remover import BgRemover
+from .cls import BgRemover, HandDetector
 
 from .hand_detection import fetch_single_hand_roi, draw_single_hand_roi, has_single_hand
 

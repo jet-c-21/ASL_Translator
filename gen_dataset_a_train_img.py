@@ -4,23 +4,20 @@ author: Jet Chien
 GitHub: https://github.com/jet-c-21
 Create Date: 11/20/21
 """
+import multiprocessing as mp
+import os
+import datetime
+
+import pandas as pd
+from cv2 import cv2
 from imutils.paths import list_images
+
 from image_pipeline import *
 from image_pipeline.preprocessing import ls_to_chunks, gen_random_token
-from string import ascii_uppercase
-import os
-import multiprocessing as mp
-from cv2 import cv2
-# from tqdm import tqdm
-from memory_tool import memory
-from functools import partial
-from image_pipeline.preprocessing import has_single_hand
-from collections import Counter
-import sys
-from pprint import pp
-import pandas as pd
 
-pipeline_failed = dict()
+from memory_profiler import profile
+
+import gc
 
 
 def create_dir(dir_path: str):
@@ -35,13 +32,14 @@ def get_img_save_name(alphabet, is_train=True, rt_len=12):
         return f"TEST_{alphabet}_{gen_random_token(rt_len)}"
 
 
+# @profile
 def create_norm_hand(image_path: str, alphabet: str, bgr: BgRemover) -> tuple:
     output_img_dict = dict()
     raw_image = get_img_ndarray(image_path)
     if raw_image is None:
         return False, output_img_dict
 
-    norm_hand = t_pipeline_a(raw_image, bgr)
+    norm_hand = t_pipeline_a(raw_image, hdt, bgr)
     if norm_hand is None:
         return False, output_img_dict
 
@@ -104,14 +102,14 @@ def handle_alphabet(alphabet_img_ls: list):
     norm_hand_s_dir = f"{OUTPUT_AP_DIR_ROOT}/{alphabet}"
     create_dir(norm_hand_s_dir)
 
-    alphabet_img_chunks = ls_to_chunks(alphabet_img_ls, 3)
+    alphabet_img_chunks = ls_to_chunks(alphabet_img_ls, CHUNK_SIZE)
 
     for i, img_chunk in enumerate(alphabet_img_chunks, start=1):
         task_res = img_chunk_processor(alphabet, img_chunk)
         task_res = record_failed_task_and_del(alphabet, task_res)
 
         save_task_result_mp(task_res)
-        print(f"Fin {alphabet}-chunks: ({i}/{len(alphabet_img_chunks)})")
+        print(f"Fin {alphabet} - chunks: ({i}/{len(alphabet_img_chunks)}) \n")
         break
 
 
@@ -121,7 +119,7 @@ def tidy_up(alphabet_dir_ls: list):
         alphabet_img_ls.sort()
 
         handle_alphabet(alphabet_img_ls)
-        break
+        # break
 
 
 def get_alphabet_dir_ls():
@@ -138,15 +136,12 @@ def get_alphabet_dir_ls():
 def create_save_dir(out_put_dir: str):
     if not os.path.exists(out_put_dir):
         create_dir(out_put_dir)
-        create_dir(f"{out_put_dir}/train")
-        create_dir(f"{out_put_dir}/test")
 
 
 def main():
     create_save_dir(OUTPUT_DIR_ROOT)
     create_save_dir(OUTPUT_AP_DIR_ROOT)
     alphabet_dir_ls = get_alphabet_dir_ls()
-    # print(alphabet_dir_ls)
     tidy_up(alphabet_dir_ls)
 
 
@@ -157,9 +152,29 @@ if __name__ == '__main__':
 
     OUTPUT_AP_DIR_ROOT = 'TRAIN_DATASET_A_AP'
 
+    CHUNK_SIZE = 2
+
+    pipeline_failed = dict()
+
+    hdt = HandDetector()
+
     bgr = BgRemover()
     bgr.load_model()
-    main()
 
-    # df = pd.DataFrame(list(pipeline_failed.items()),columns=['Alphabet', 'FailedCount'])
-    # df.to_csv('DATASET_A_train_img_failed.cvs', index=False)
+    s = datetime.datetime.now()
+    main()
+    e = datetime.datetime.now()
+    exe_time = e - s
+
+    seconds = exe_time.total_seconds()
+    hours = int(seconds // 3600)
+    minutes = int((seconds % 3600) // 60)
+    seconds = int(seconds % 60)
+
+    exe_time_str = f"{hours}hr_{minutes}m_{seconds}s"
+    print(f"time cost = {exe_time_str}")
+
+    csv_s_path = f"DATASET_A_train_img_failed_cost={exe_time_str}.cvs"
+
+    df = pd.DataFrame(list(pipeline_failed.items()), columns=['Alphabet', 'FailedCount'])
+    df.to_csv(csv_s_path, index=False)

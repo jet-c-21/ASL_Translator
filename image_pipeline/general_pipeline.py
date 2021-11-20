@@ -4,7 +4,7 @@ import numpy as np
 
 from image_pipeline.preprocessing.ult import get_img_ndarray, show_img
 from .preprocessing import fetch_single_hand_roi, rgb_to_hsv, grayscale, resize, bg_normalization_red_channel, \
-    bg_normalization_fg_extraction, BgRemover, remove_bg, has_single_hand
+    bg_normalization_fg_extraction, HandDetector, BgRemover, remove_bg, has_single_hand
 
 """
 Types of preprocessing:
@@ -43,8 +43,8 @@ Type-B: this type of pipeline contains data augmentation structure
 """
 
 
-def roi_normalize(image: np.ndarray) -> Union[np.ndarray, None]:
-    hand_roi = fetch_single_hand_roi(image)  # with default padding 15
+def roi_normalize(image: np.ndarray, hdt: HandDetector) -> Union[np.ndarray, None]:
+    hand_roi = fetch_single_hand_roi(image, hdt)  # with default padding 15
     if hand_roi is None:
         msg = f"[WARN] - roi-normalize failed. By: failed to fetch hand-roi."
         print(msg)
@@ -79,27 +79,14 @@ def resolution_normalize(image: np.ndarray, size=28) -> np.ndarray:
 
 
 # >>>>>>>>>>>> general pipeline template >>>>>>>>>>>>
-def pipeline_0(image: Union[np.ndarray, str], img_size=28):
-    """
-    Roi-Norm
-
-    Illumination-Norm
-
-    Channel-Norm
-
-    Resolution-Norm
-
-    :param image: np.ndarray | str
-    :param img_size: int
-    :return:
-    """
+def pipeline_0(image: Union[np.ndarray, str], hdt: HandDetector, img_size=28):
     image = get_img_ndarray(image)
     if image is None:
         msg = f"[WARN] - failed to pass pipeline_1. By: failed to load image"
         print(msg)
         return
 
-    image = roi_normalize(image)
+    image = roi_normalize(image, hdt)
     if image is None:
         msg = f"[WARN] - failed to pass pipeline_1. By: failed to get norm_hand"
         print(msg)
@@ -135,7 +122,7 @@ def pipeline_2(image: Union[np.ndarray, str], bgr: BgRemover, img_size=28):
     return image
 
 
-def pipeline_5(image: Union[np.ndarray, str], bgr: BgRemover, img_size=28):
+def pipeline_5(image: Union[np.ndarray, str], hdt: HandDetector, bgr: BgRemover, img_size=28):
     # load image
     image = get_img_ndarray(image)
     if image is None:
@@ -144,7 +131,7 @@ def pipeline_5(image: Union[np.ndarray, str], bgr: BgRemover, img_size=28):
         return
 
     # process image
-    image = roi_normalize(image)
+    image = roi_normalize(image, hdt)
     if image is None:
         msg = f"[WARN] - failed to pass pipeline_1. By: failed to get norm_hand"
         print(msg)
@@ -158,7 +145,8 @@ def pipeline_5(image: Union[np.ndarray, str], bgr: BgRemover, img_size=28):
     return image
 
 
-def pipeline_base(image: Union[np.ndarray, str], bgr: BgRemover, img_size=28) -> Union[np.ndarray, None]:
+def pipeline_base(image: Union[np.ndarray, str], hdt: HandDetector,
+                  bgr: BgRemover, img_size=28) -> Union[np.ndarray, None]:
     # load image
     image = get_img_ndarray(image)
     if image is None:
@@ -167,7 +155,7 @@ def pipeline_base(image: Union[np.ndarray, str], bgr: BgRemover, img_size=28) ->
         return
 
     # process image
-    image = roi_normalize(image)
+    image = roi_normalize(image, hdt)
     if image is None:
         msg = f"[WARN] - failed to pass pipeline_1. By: failed to get norm_hand"
         print(msg)
@@ -175,14 +163,14 @@ def pipeline_base(image: Union[np.ndarray, str], bgr: BgRemover, img_size=28) ->
 
     image = illumination_normalize(image)
 
-    if not has_single_hand(image):
+    if not has_single_hand(image, hdt):
         msg = f"[WARN] - failed to pass pipeline_base. By: can't detect any hand in the image"
         print(msg)
         return
 
     image = bg_normalize(image, bgr)
 
-    if not has_single_hand(image):
+    if not has_single_hand(image, hdt):
         msg = f"[WARN] - failed to pass pipeline_base. By: can't detect any hand in the image"
         print(msg)
         return

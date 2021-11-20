@@ -3,6 +3,7 @@
 .virtual_documents
 README.md.backup
 kite_tutorial.ipynb
+*.zip
 
 # image folder
 dataset1/*

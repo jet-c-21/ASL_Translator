@@ -10,7 +10,7 @@ from tqdm import tqdm
 
 
 def extract_zip(zip_path: str, extract_path=None):
-    print('Extracting zip ...')
+    print('Extracting zip...')
     with zipfile.ZipFile(zip_path, 'r') as zip_ref:
         for file in tqdm(iterable=zip_ref.namelist(), total=len(zip_ref.namelist())):
             if extract_path:
@@ -33,5 +33,5 @@ def download_file_by_gdown(file_id: str, save_fp=None):
 
 
 if __name__ == '__main__':
-    dataset1_file_id = '1FpYkbhAb7fX1z_ygNA1i__av2h6uAkUd'
+    dataset1_file_id = '1LqJwJQnUxQAhbFXlmAj-DNLF4VjEiRRh'
     download_file_by_gdown(dataset1_file_id)
