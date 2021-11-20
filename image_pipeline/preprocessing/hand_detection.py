@@ -92,3 +92,9 @@ def fetch_single_hand_roi(image: np.ndarray, padding=15) -> Union[np.ndarray, No
 
     roi = cv2.flip(roi, 1)
     return roi
+
+
+def has_single_hand(image: np.ndarray) -> bool:
+    if detect_single_hand(image) is None:
+        return False
+    return True

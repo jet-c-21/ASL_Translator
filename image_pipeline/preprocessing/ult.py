@@ -47,3 +47,11 @@ def img_show(image: np.ndarray):
 def img_plt_save(image: np.ndarray, fp='output.jpg'):
     plt.imshow(image)
     plt.savefig(fp)
+
+
+def ls_to_chunks(ls: list, chunk_size=100) -> list:
+    result = list()
+    for i in range(0, len(ls), chunk_size):
+        result.append(ls[i:i + chunk_size])
+
+    return result

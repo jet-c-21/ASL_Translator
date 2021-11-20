@@ -1,11 +1,14 @@
 # Customerization
-dataset1/*
-DATASET_A/*
-DATASET_A_AP/*
 .idea
 .virtual_documents
 README.md.backup
 kite_tutorial.ipynb
+
+# image folder
+dataset1/*
+DATASET_A/*
+DATASET_A_AP/*
+American/*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

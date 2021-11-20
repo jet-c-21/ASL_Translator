@@ -4,7 +4,7 @@ import numpy as np
 
 from image_pipeline.preprocessing.ult import get_img_ndarray, show_img
 from .preprocessing import fetch_single_hand_roi, rgb_to_hsv, grayscale, resize, bg_normalization_red_channel, \
-    bg_normalization_fg_extraction, BgRemover, remove_bg
+    bg_normalization_fg_extraction, BgRemover, remove_bg, has_single_hand
 
 """
 Types of preprocessing:
@@ -158,7 +158,7 @@ def pipeline_5(image: Union[np.ndarray, str], bgr: BgRemover, img_size=28):
     return image
 
 
-def pipeline_base(image: Union[np.ndarray, str], bgr: BgRemover, img_size=28):
+def pipeline_base(image: Union[np.ndarray, str], bgr: BgRemover, img_size=28) -> Union[np.ndarray, None]:
     # load image
     image = get_img_ndarray(image)
     if image is None:
@@ -174,7 +174,19 @@ def pipeline_base(image: Union[np.ndarray, str], bgr: BgRemover, img_size=28):
         return
 
     image = illumination_normalize(image)
+
+    if not has_single_hand(image):
+        msg = f"[WARN] - failed to pass pipeline_base. By: can't detect any hand in the image"
+        print(msg)
+        return
+
     image = bg_normalize(image, bgr)
+
+    if not has_single_hand(image):
+        msg = f"[WARN] - failed to pass pipeline_base. By: can't detect any hand in the image"
+        print(msg)
+        return
+
     image = channel_normalize(image)
     image = resolution_normalize(image, img_size)
 

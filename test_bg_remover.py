@@ -24,4 +24,4 @@ if __name__ == '__main__':
 
     # img_bg_rm = da_add_noise(img_bg_rm, 'speckle')
 
-    show_img(img_bg_rm)
+    # show_img(img_bg_rm)

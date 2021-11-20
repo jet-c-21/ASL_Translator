@@ -9,7 +9,8 @@ import numpy as np
 
 from image_pipeline.preprocessing.ult import get_img_ndarray, show_img
 from .preprocessing import fetch_single_hand_roi, rgb_to_hsv, grayscale, resize, bg_normalization_red_channel, \
-    bg_normalization_fg_extraction, BgRemover, remove_bg, da_rotate, da_filter, da_add_noise, da_dilation, da_erosion
+    bg_normalization_fg_extraction, BgRemover, remove_bg, da_rotate, da_filter, da_add_noise, da_dilation, da_erosion, \
+    has_single_hand
 from .general_pipeline import roi_normalize, bg_normalize, illumination_normalize, channel_normalize, \
     resolution_normalize
 
@@ -27,14 +28,25 @@ def t_pipeline_a(image: Union[np.ndarray, str], bgr: BgRemover, img_size=28):
     # process image
     image = bg_normalize(image, bgr)
 
+    if not has_single_hand(image):
+        msg = f"[PIPE-WARN] - failed to pass t_pipeline_a. By: can't detect any hand after bg_remove"
+        print(msg)
+        return
+
     image = roi_normalize(image)
     if image is None:
-        msg = f"[WARN] - failed to pass pipeline_1. By: failed to get norm_hand"
+        msg = f"[PIPE-WARN] - failed to pass t_pipeline_a. By: failed to get after bg_remove"
         print(msg)
         return
 
     image = illumination_normalize(image)
+    # if not has_single_hand(image):
+    #     msg = f"[PIPE-WARN] - failed to pass t_pipeline_a. By: can't detect any hand after illumination normalization"
+    #     print(msg)
+    #     return
+
     image = channel_normalize(image)
+
     image = resolution_normalize(image, img_size)
 
     return image

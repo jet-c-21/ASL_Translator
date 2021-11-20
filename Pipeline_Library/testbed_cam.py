@@ -3,6 +3,7 @@ import cv2
 
 cap = cv2.VideoCapture(0)
 
+# model = load_model()
 
 while(True):
     _, frame = cap.read()

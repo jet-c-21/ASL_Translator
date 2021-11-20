@@ -7,9 +7,11 @@
 
 ## Environment
 ```
-conda create --name  python=3.8 -y
+conda create --name aslt python=3.8 -y
 ```
 ```
+// actactivate venv
+pip install ipykernel
 python -m ipykernel install --user --name aslt --display-name "ASLT"
 ```
 

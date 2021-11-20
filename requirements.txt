@@ -31,4 +31,9 @@ rembg
 numpy==1.20.3 # restricted by rembg
 
 
+# google-drive connection
+gdown
+google-api-python-client
+
+
 
