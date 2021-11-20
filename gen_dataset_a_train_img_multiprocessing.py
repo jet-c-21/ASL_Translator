@@ -92,16 +92,18 @@ def handle_alphabet(alphabet_img_ls: list):
     norm_hand_s_dir = f"{OUTPUT_AP_DIR_ROOT}/{alphabet}"
     create_dir(norm_hand_s_dir)
 
-    alphabet_img_chunks = ls_to_chunks(alphabet_img_ls, CHUNK_SIZE)
+    print(alphabet_img_ls)
 
-    for i, img_chunk in enumerate(alphabet_img_chunks, start=1):
-        task_res = img_chunk_processor(alphabet, img_chunk)
-        # task_res = record_failed_task_and_del(alphabet, task_res)
-
-        # save_task_result_mp(task_res)
-        # print(f"Fin {alphabet} - chunks: ({i}/{len(alphabet_img_chunks)}) \n")
-
-        break
+    # alphabet_img_chunks = ls_to_chunks(alphabet_img_ls, CHUNK_SIZE)
+    #
+    # for i, img_chunk in enumerate(alphabet_img_chunks, start=1):
+    #     task_res = img_chunk_processor(alphabet, img_chunk)
+    #     # task_res = record_failed_task_and_del(alphabet, task_res)
+    #
+    #     # save_task_result_mp(task_res)
+    #     # print(f"Fin {alphabet} - chunks: ({i}/{len(alphabet_img_chunks)}) \n")
+    #
+    #     break
 
 
 def tidy_up(alphabet_dir_ls: list):
@@ -110,7 +112,7 @@ def tidy_up(alphabet_dir_ls: list):
         alphabet_img_ls.sort()
 
         handle_alphabet(alphabet_img_ls)
-        # break
+        break
 
 
 def get_alphabet_dir_ls():
