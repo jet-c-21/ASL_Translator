@@ -45,12 +45,12 @@ def create_norm_hand(image_path: str, alphabet: str, bgr: BgRemover) -> tuple:
     if norm_hand is None:
         return False, output_img_dict
 
-    raw_image_s_dir = f"{OUTPUT_DIR_ROOT}/train/{alphabet}"
+    raw_image_s_dir = f"{OUTPUT_DIR_ROOT}/{alphabet}"
     img_name = get_img_save_name(alphabet)
     raw_image_s_path = f"{raw_image_s_dir}/{img_name}.jpg"
     output_img_dict['raw'] = (raw_image_s_path, raw_image)
 
-    norm_hand_s_dir = f"{OUTPUT_AP_DIR_ROOT}/train/{alphabet}"
+    norm_hand_s_dir = f"{OUTPUT_AP_DIR_ROOT}/{alphabet}"
     norm_hand_s_path = f"{norm_hand_s_dir}/{img_name}.jpg"
     output_img_dict['norm'] = (norm_hand_s_path, norm_hand)
 
@@ -99,12 +99,12 @@ def record_failed_task_and_del(alphabet: str, task_result: list) -> list:
 def handle_alphabet(alphabet_img_ls: list):
     alphabet = alphabet_img_ls[0].split('/')[-2]
 
-    img_raw_s_dir = f"{OUTPUT_DIR_ROOT}/train/{alphabet}"
+    img_raw_s_dir = f"{OUTPUT_DIR_ROOT}/{alphabet}"
     create_dir(img_raw_s_dir)
-    norm_hand_s_dir = f"{OUTPUT_AP_DIR_ROOT}/train/{alphabet}"
+    norm_hand_s_dir = f"{OUTPUT_AP_DIR_ROOT}/{alphabet}"
     create_dir(norm_hand_s_dir)
 
-    alphabet_img_chunks = ls_to_chunks(alphabet_img_ls, 300)
+    alphabet_img_chunks = ls_to_chunks(alphabet_img_ls, 3)
 
     for i, img_chunk in enumerate(alphabet_img_chunks, start=1):
         task_res = img_chunk_processor(alphabet, img_chunk)
@@ -112,7 +112,7 @@ def handle_alphabet(alphabet_img_ls: list):
 
         save_task_result_mp(task_res)
         print(f"Fin {alphabet}-chunks: ({i}/{len(alphabet_img_chunks)})")
-        # break
+        break
 
 
 def tidy_up(alphabet_dir_ls: list):
@@ -121,7 +121,7 @@ def tidy_up(alphabet_dir_ls: list):
         alphabet_img_ls.sort()
 
         handle_alphabet(alphabet_img_ls)
-        # break
+        break
 
 
 def get_alphabet_dir_ls():
@@ -146,22 +146,20 @@ def main():
     create_save_dir(OUTPUT_DIR_ROOT)
     create_save_dir(OUTPUT_AP_DIR_ROOT)
     alphabet_dir_ls = get_alphabet_dir_ls()
+    # print(alphabet_dir_ls)
     tidy_up(alphabet_dir_ls)
 
 
 if __name__ == '__main__':
-    DATASET1_DIR_PATH = 'dataset1/asl_alphabet_train'
+    DATASET1_DIR_PATH = 'dataset1'
 
-    OUTPUT_DIR_ROOT = 'DATASET_A'
+    OUTPUT_DIR_ROOT = 'TRAIN_DATASET_A'
 
-    OUTPUT_AP_DIR_ROOT = 'DATASET_A_AP'
+    OUTPUT_AP_DIR_ROOT = 'TRAIN_DATASET_A_AP'
 
     bgr = BgRemover()
     bgr.load_model()
     main()
 
-    df = pd.DataFrame(
-        list(pipeline_failed.items()),
-        columns=['Alphabet', 'FailedCount']
-    )
-    df.to_csv('DATASET_A_train_img_failed.cvs', index=False)
+    # df = pd.DataFrame(list(pipeline_failed.items()),columns=['Alphabet', 'FailedCount'])
+    # df.to_csv('DATASET_A_train_img_failed.cvs', index=False)
