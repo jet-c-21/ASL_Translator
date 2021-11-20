@@ -203,7 +203,7 @@ def da_add_noise(image, mode='s&p'):
         return noised_image
 
 
-def da_filter(image: np.ndarray, mode='blur', k_size=7) -> np.ndarray:
+def da_filter(image: np.ndarray, mode='blur', k_size=5) -> np.ndarray:
     if mode == 'blur':
         return cv2.medianBlur(image, k_size)
 
@@ -231,6 +231,10 @@ def grayscale(image: np.ndarray) -> np.ndarray:
     return cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
 
-def resize(image: np.ndarray, scale) -> np.ndarray:
+def resize_by_scale(image: np.ndarray, scale) -> np.ndarray:
     dim_size = (int(image.shape[1] * scale), int(image.shape[0] * scale))
     return cv2.resize(image, dim_size, interpolation=cv2.INTER_AREA)
+
+
+def resize(image: np.ndarray, img_size) -> np.ndarray:
+    return cv2.resize(image, (img_size, img_size), interpolation=cv2.INTER_AREA)

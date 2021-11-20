@@ -18,6 +18,7 @@ def detect_single_hand(image: np.ndarray) -> Union[NormalizedLandmarkList, None]
 
     hand_detector = mdp_hands.Hands(static_image_mode=True, max_num_hands=1, min_detection_confidence=0.5)
     image = cv2.flip(image, 1)
+
     detect_result = hand_detector.process(cv2.cvtColor(image, cv2.COLOR_BGR2RGB))  # prevent to change the image color
 
     hand_landmarks_ls = detect_result.multi_hand_landmarks
@@ -43,12 +44,16 @@ def get_hand_roi_coord(image: np.ndarray, hand_landmarks: NormalizedLandmarkList
 
     for lm in hand_landmarks.landmark:
         x, y = int(lm.x * image_width), int(lm.y * image_height)
+
         if x > x_max:
             x_max = x
+
         if x < x_min:
             x_min = x
+
         if y > y_max:
             y_max = y
+
         if y < y_min:
             y_min = y
 
@@ -74,12 +79,16 @@ def draw_single_hand_roi(image: np.ndarray, padding=15) -> Union[np.ndarray, Non
 
 
 def fetch_single_hand_roi(image: np.ndarray, padding=15) -> Union[np.ndarray, None]:
-    hand_landmarks = detect_single_hand(image)
+    hand_landmarks = detect_single_hand(image)  # the landmark is getting from the flipped mode
+
     if not hand_landmarks:
         msg = f"[WARN] - Failed to fetch single hand roi."
         print(msg)
         return
 
+    image = cv2.flip(image, 1)
     x_min, x_max, y_min, y_max = get_hand_roi_coord(image, hand_landmarks)
     roi = image[(y_min - padding):(y_max + padding), (x_min - padding):(x_max + padding)]
+
+    roi = cv2.flip(roi, 1)
     return roi

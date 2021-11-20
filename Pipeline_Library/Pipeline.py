@@ -86,6 +86,7 @@ def fetch_hand_roi(image, padding=15, bg=False, which_hand='Right'):
                 # cropped_img = image[(y_min - padding):(y_max + padding), (x_min - padding):(x_max + padding)]
 
     if bg and which_hand != 'Both':
+        print('!!!!')
         if cropped_img is None:
             image = black_bg
         else:
