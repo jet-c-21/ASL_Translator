@@ -9,6 +9,8 @@ from typing import Union
 
 import numpy as np
 from cv2 import cv2
+import PIL
+from matplotlib import pyplot as plt
 
 
 def get_img_ndarray(input_obj: Union[str, np.ndarray]) -> Union[np.ndarray, None]:
@@ -24,6 +26,24 @@ def get_img_ndarray(input_obj: Union[str, np.ndarray]) -> Union[np.ndarray, None
                 print(msg)
 
 
-def show_img(image: np.ndarray):
-    cv2.imshow('', image)
+def pil_image_to_np_ndarray(image: PIL.Image.Image) -> np.ndarray:
+    return cv2.cvtColor(np.asarray(image), cv2.COLOR_RGB2BGR)
+
+
+def np_ndarray_to_pil_image(image: np.ndarray) -> PIL.Image.Image:
+    return PIL.Image.fromarray(cv2.cvtColor(image, cv2.COLOR_BGR2RGB))
+
+
+def show_img(image: np.ndarray, window_name=''):
+    cv2.imshow(window_name, image)
     cv2.waitKey(0)
+
+
+def img_show(image: np.ndarray):
+    plt.imshow(image)
+    plt.show()
+
+
+def img_plt_save(image: np.ndarray, fp='output.jpg'):
+    plt.imshow(image)
+    plt.savefig(fp)

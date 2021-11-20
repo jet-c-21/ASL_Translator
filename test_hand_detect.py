@@ -15,7 +15,7 @@ def show_img(image: np.ndarray, widow_name=''):
 
 
 if __name__ == '__main__':
-    image_path = 'img_for_dev/peace.jpg'
+    image_path = 'img_for_dev/peace_0.jpg'
     image = cv2.imread(image_path)
 
     show_img(image, 'raw')
