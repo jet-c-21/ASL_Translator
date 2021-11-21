@@ -4,7 +4,10 @@ author: Jet Chien
 GitHub: https://github.com/jet-c-21
 Create Date: 11/21/21
 """
-import mediapipe
-from mediapipe.solutions.hands import Hands
+import datetime
 
-print(mediapipe.solutions)
+
+s = datetime.datetime.now()
+e = datetime.datetime.now()
+x = e - s
+print(type(x))

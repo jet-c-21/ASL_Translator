@@ -6,30 +6,15 @@ Create Date: 11/20/21
 """
 import multiprocessing as mp
 import os
-import datetime
 
+import datetime
 import pandas as pd
 from cv2 import cv2
 from imutils.paths import list_images
 
+from data_tool import create_dir, get_img_save_name
 from image_pipeline import *
-from image_pipeline.preprocessing import ls_to_chunks, gen_random_token
-
-from memory_profiler import profile
-
-import gc
-
-
-def create_dir(dir_path: str):
-    if not os.path.exists(dir_path):
-        os.makedirs(dir_path)
-
-
-def get_img_save_name(alphabet, is_train=True, rt_len=12):
-    if is_train:
-        return f"TRAIN_{alphabet}_{gen_random_token(rt_len)}"
-    else:
-        return f"TEST_{alphabet}_{gen_random_token(rt_len)}"
+from image_pipeline.preprocessing import ls_to_chunks
 
 
 # @profile
@@ -110,7 +95,7 @@ def handle_alphabet(alphabet_img_ls: list):
 
         save_task_result_mp(task_res)
         print(f"Fin {alphabet} - chunks: ({i}/{len(alphabet_img_chunks)}) \n")
-        break
+        # break
 
 
 def tidy_up(alphabet_dir_ls: list):
@@ -152,7 +137,7 @@ if __name__ == '__main__':
 
     OUTPUT_AP_DIR_ROOT = 'TRAIN_DATASET_A_AP'
 
-    CHUNK_SIZE = 2
+    CHUNK_SIZE = 300
 
     pipeline_failed = dict()
 

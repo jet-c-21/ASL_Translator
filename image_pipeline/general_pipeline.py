@@ -147,34 +147,47 @@ def pipeline_5(image: Union[np.ndarray, str], hdt: HandDetector, bgr: BgRemover,
 
 def pipeline_base(image: Union[np.ndarray, str], hdt: HandDetector,
                   bgr: BgRemover, img_size=28) -> Union[np.ndarray, None]:
+    """
+    ROI-Norm
+
+    Background-Norm
+
+    *Hand-Detection-Filter
+
+    Illumination-Norm
+
+    Channel-Norm
+
+    Resolution-Norm
+
+    :param image:
+    :param hdt:
+    :param bgr:
+    :param img_size:
+    :return: Union[np.ndarray, None]
+    """
     # load image
     image = get_img_ndarray(image)
     if image is None:
-        msg = f"[WARN] - failed to pass pipeline_1. By: failed to load image"
+        msg = f"[PIPE-WARN] - (1) - failed to pass pipeline_base. By: failed to load image"
         print(msg)
         return
 
     # process image
     image = roi_normalize(image, hdt)
     if image is None:
-        msg = f"[WARN] - failed to pass pipeline_1. By: failed to get norm_hand"
-        print(msg)
-        return
-
-    image = illumination_normalize(image)
-
-    if not has_single_hand(image, hdt):
-        msg = f"[WARN] - failed to pass pipeline_base. By: can't detect any hand in the image"
+        msg = f"[PIPE-WARN] - (2) - failed to pass pipeline_base. By: failed to get norm_hand"
         print(msg)
         return
 
     image = bg_normalize(image, bgr)
 
     if not has_single_hand(image, hdt):
-        msg = f"[WARN] - failed to pass pipeline_base. By: can't detect any hand in the image"
+        msg = f"[PIPE-WARN] - (3) - failed to pass pipeline_base. By: can't detect any hand in the image, after bg_norm"
         print(msg)
         return
 
+    image = illumination_normalize(image)
     image = channel_normalize(image)
     image = resolution_normalize(image, img_size)
 

@@ -34,4 +34,13 @@ def download_file_by_gdown(file_id: str, save_fp=None):
 
 if __name__ == '__main__':
     dataset1_file_id = '1LqJwJQnUxQAhbFXlmAj-DNLF4VjEiRRh'
-    download_file_by_gdown(dataset1_file_id)
+
+    dataset4_file_id = '1SiBXqtHkM1PoXi2qRD5I7IzCU2NNcmZO'
+
+    file_id_ls = [
+        # dataset1_file_id,
+        dataset4_file_id,
+    ]
+
+    for i, file_id in enumerate(file_id_ls, start=1):
+        download_file_by_gdown(file_id)

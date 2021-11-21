@@ -17,7 +17,27 @@ from .general_pipeline import roi_normalize, bg_normalize, illumination_normaliz
 from tqdm import tqdm
 
 
-def t_pipeline_a(image: Union[np.ndarray, str], hdt: HandDetector, bgr: BgRemover, img_size=28):
+def t_pipeline_a(image: Union[np.ndarray, str],
+                 hdt: HandDetector, bgr: BgRemover, img_size=28) -> Union[np.ndarray, None]:
+    """
+    Background-Norm
+
+    *Hand-Detection-Filter
+
+    ROI-Norm
+
+    Illumination-Norm
+
+    Channel-Norm
+
+    Resolution-Norm
+
+    :param image:
+    :param hdt:
+    :param bgr:
+    :param img_size:
+    :return:
+    """
     # load image
     image = get_img_ndarray(image)
     if image is None:
@@ -40,10 +60,6 @@ def t_pipeline_a(image: Union[np.ndarray, str], hdt: HandDetector, bgr: BgRemove
         return
 
     image = illumination_normalize(image)
-    # if not has_single_hand(image):
-    #     msg = f"[PIPE-WARN] - failed to pass t_pipeline_a. By: can't detect any hand after illumination normalization"
-    #     print(msg)
-    #     return
 
     image = channel_normalize(image)
 

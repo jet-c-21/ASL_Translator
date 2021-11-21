@@ -19,51 +19,42 @@ from memory_profiler import profile
 from data_tool import create_dir, get_img_save_name
 
 import gc
+from functools import partial
 
 from tqdm import tqdm
 
 
-def create_norm_hand(image_path: str, alphabet: str, bgr: BgRemover) -> tuple:
-    output_img_dict = dict()
+def _task_worker(image_path: str, alphabet: str, hdt: HandDetector, bgr: BgRemover) -> bool:
     raw_image = get_img_ndarray(image_path)
     if raw_image is None:
-        return False, output_img_dict
+        return False
 
     norm_hand = t_pipeline_a(raw_image, hdt, bgr)
     if norm_hand is None:
-        return False, output_img_dict
+        return False
 
     raw_image_s_dir = f"{OUTPUT_DIR_ROOT}/{alphabet}"
     img_name = get_img_save_name(alphabet)
     raw_image_s_path = f"{raw_image_s_dir}/{img_name}.jpg"
-    output_img_dict['raw'] = (raw_image_s_path, raw_image)
+    cv2.imwrite(raw_image_s_path, raw_image)
 
     norm_hand_s_dir = f"{OUTPUT_AP_DIR_ROOT}/{alphabet}"
     norm_hand_s_path = f"{norm_hand_s_dir}/{img_name}.jpg"
-    output_img_dict['norm'] = (norm_hand_s_path, norm_hand)
+    cv2.imwrite(norm_hand_s_path, norm_hand)
 
-    return True, output_img_dict
-
-
-def _task_result_helper(record: dict):
-    cv2.imwrite(record['raw'][0], record['raw'][1])
-    cv2.imwrite(record['norm'][0], record['norm'][1])
+    return True
 
 
-def _task_worker(task_result: list):
+def images_processor_mp(alphabet: str, img_path_ls: list) -> list:
     with mp.Pool() as pool:
-        _ = list(
+        task = partial(_task_worker, alphabet=alphabet, hdt=hdt, bgr=bgr)
+        task_result = list(
             tqdm(
-                pool.imap(_task_result_helper, task_result), total=len(task_result)
+                pool.imap(task, img_path_ls), total=len(img_path_ls)
             )
         )
 
-
-def img_chunk_processor_mp(alphabet: str, img_chunk: list) -> list:
-    task_result = list()
-    for img_path in tqdm(img_chunk, total=len(img_chunk)):
-        task_result.append(create_norm_hand(img_path, alphabet, bgr))
-    return task_result
+        return task_result
 
 
 def record_failed_task_and_del(alphabet: str, task_result: list) -> list:
@@ -92,7 +83,9 @@ def handle_alphabet(alphabet_img_ls: list):
     norm_hand_s_dir = f"{OUTPUT_AP_DIR_ROOT}/{alphabet}"
     create_dir(norm_hand_s_dir)
 
-    print(alphabet_img_ls)
+    task_res = images_processor_mp(alphabet, alphabet_img_ls)
+
+    print(task_res)
 
     # alphabet_img_chunks = ls_to_chunks(alphabet_img_ls, CHUNK_SIZE)
     #
@@ -139,11 +132,11 @@ def main():
 
 
 if __name__ == '__main__':
-    DATASET1_DIR_PATH = 'dataset1'
+    DATASET1_DIR_PATH = '../dataset1'
 
-    OUTPUT_DIR_ROOT = 'TRAIN_DATASET_A'
+    OUTPUT_DIR_ROOT = '../TRAIN_DATASET_A'
 
-    OUTPUT_AP_DIR_ROOT = 'TRAIN_DATASET_A_AP'
+    OUTPUT_AP_DIR_ROOT = '../TRAIN_DATASET_A_AP'
 
     CHUNK_SIZE = 2
 
