@@ -7,10 +7,15 @@ kite_tutorial.ipynb
 
 # image folder
 dataset1/*
+dataset1.zip
 dataset2/*
+dataset2.zip
 dataset2-53K/*
+dataset2-53K.zip
 dataset3/*
+dataset3.zip
 dataset4/*
+dataset4.zip
 DATASET_A/*
 DATASET_A_AP/*
 TRAIN_DATASET_A/*
