@@ -22,6 +22,8 @@ DATASET_A/*
 DATASET_A_AP/*
 TRAIN_DATASET_A/*
 TRAIN_DATASET_A_AP/*
+TEST_DATASET_A/*
+TEST_DATASET_A_AP/*
 kaggle-ref/asl_alphabet_train
 kaggle-ref/asl_alphabet_test
 kaggle-ref/kaggle.zip

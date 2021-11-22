@@ -143,6 +143,9 @@ def get_model(input_shape):
     image = layers.Input(shape=input_shape)
     theta = Localization()(image)
     x = BilinearInterpolation(height=input_shape[0], width=input_shape[1])([image, theta])
+
+
+
     x = tf.keras.layers.Conv2D(64, [9, 9], activation='relu')(x)
     x = tf.keras.layers.MaxPool2D()(x)
     x = tf.keras.layers.Conv2D(64, [7, 7], activation='relu')(x)
