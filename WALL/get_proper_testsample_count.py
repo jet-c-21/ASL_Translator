@@ -19,5 +19,5 @@ def get_proper_test_sample_count(train_sample_count: int, test_proportion=0.2):
 
 
 if __name__ == '__main__':
-    y = get_proper_test_sample_count(3000, 0.2)
+    y = get_proper_test_sample_count(500, 0.2)
     print(y)

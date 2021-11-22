@@ -5,7 +5,10 @@ GitHub: https://github.com/jet-c-21
 Create Date: 11/21/21
 """
 from imutils.paths import list_images
+from tqdm import tqdm
+
 from data_tool import *
+from image_pipeline import get_img_ndarray
 
 
 def rename_sub_folder():
@@ -35,11 +38,20 @@ def remove_cropped_img():
             os.remove(img_path)
 
 
-if __name__ == '__main__':
-    OUTPUT_DIR_ROOT = 'TEST_DATASET_A'
-    OUTPUT_AP_DIR_ROOT = 'TEST_DATASET_A_AP'
+def drop_small_image():
+    img_path_ls = list_images(DATASET2_DIR_PATH)
 
+    for img_path in tqdm(img_path_ls):
+        img = get_img_ndarray(img_path)
+
+        if img is not None:
+            resolution = img.shape[0] * img.shape[1]
+            if resolution < 40000:
+                print(f"remove: {img_path}")
+                os.remove(img_path)
+
+
+if __name__ == '__main__':
     DATASET2_DIR_PATH = 'dataset2'
 
-    x = list(list_images(DATASET2_DIR_PATH))
-    print(len(x))
+    drop_small_image()

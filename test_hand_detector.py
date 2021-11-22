@@ -17,4 +17,4 @@ if __name__ == '__main__':
     print(hand_landmarks)
 
     roi = fetch_single_hand_roi(image, hdt)
-    # show_img(roi, 'roi')
+    show_img(roi, 'roi')

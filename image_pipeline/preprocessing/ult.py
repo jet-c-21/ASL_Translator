@@ -11,6 +11,9 @@ import numpy as np
 from cv2 import cv2
 import PIL
 from matplotlib import pyplot as plt
+import hashlib
+
+md5_hash = hashlib.md5()
 
 
 def get_img_ndarray(input_obj: Union[str, np.ndarray]) -> Union[np.ndarray, None]:
@@ -55,3 +58,10 @@ def ls_to_chunks(ls: list, chunk_size=100) -> list:
         result.append(ls[i:i + chunk_size])
 
     return result
+
+
+def hash_image(image: np.ndarray) -> str:
+    image_bytes = image.tobytes()
+    md5_hash.update(image_bytes)
+
+    return md5_hash.hexdigest()

@@ -14,12 +14,17 @@ dataset2-53K/*
 dataset2-53K.zip
 dataset3/*
 dataset3.zip
+dataset3-206K/*
+dataset3-206K.zip
 dataset4/*
 dataset4.zip
 DATASET_A/*
 DATASET_A_AP/*
 TRAIN_DATASET_A/*
 TRAIN_DATASET_A_AP/*
+kaggle-ref/asl_alphabet_train
+kaggle-ref/asl_alphabet_test
+kaggle-ref/kaggle.zip
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

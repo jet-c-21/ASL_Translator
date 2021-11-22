@@ -33,12 +33,15 @@ def download_file_by_gdown(file_id: str, save_fp=None):
 
 
 if __name__ == '__main__':
-    dataset1_file_id = '1LqJwJQnUxQAhbFXlmAj-DNLF4VjEiRRh'
-
-    dataset4_file_id = '1SiBXqtHkM1PoXi2qRD5I7IzCU2NNcmZO'
+    dataset1_file_id = '1BaOibzn64d_DOrXczXhOJEvOMey6A-c-'
+    dataset2_file_id = '1WJS6IuX9dOMcb7wh-9Ve7HG-V5L3n8qm'
+    dataset3_file_id = '103V_z3YRq9TuUF023i465i0UGyY2BB8F'
+    dataset4_file_id = '1AoIpFxbZ8bo9Zr6uDn29yr8fuqON3NgU'
 
     file_id_ls = [
-        # dataset1_file_id,
+        dataset1_file_id,
+        dataset2_file_id,
+        dataset3_file_id,
         dataset4_file_id,
     ]
 

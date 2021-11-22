@@ -1,5 +1,5 @@
 # coding: utf-8
-from .ult import ls_to_chunks, show_img, img_show, img_plt_save, get_img_ndarray, np_ndarray_to_pil_image, pil_image_to_np_ndarray
+from .ult import ls_to_chunks, show_img, img_show, img_plt_save, get_img_ndarray, np_ndarray_to_pil_image, pil_image_to_np_ndarray, hash_image
 
 from .tk_gen import gen_random_token
 

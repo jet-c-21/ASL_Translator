@@ -4,10 +4,10 @@ author: Jet Chien
 GitHub: https://github.com/jet-c-21
 Create Date: 11/21/21
 """
-import datetime
+import string
+
+upper_alphabet = string.ascii_uppercase
+print(upper_alphabet)
 
 
-s = datetime.datetime.now()
-e = datetime.datetime.now()
-x = e - s
-print(type(x))
+

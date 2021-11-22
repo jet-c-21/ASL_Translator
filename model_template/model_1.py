@@ -38,4 +38,5 @@ def get_model_1():
 
 
 if __name__ == '__main__':
-    print(get_model_1().summary())
+    model = get_model_1().summary()
+    print(type(model))
