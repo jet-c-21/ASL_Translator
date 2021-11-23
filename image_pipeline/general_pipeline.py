@@ -218,18 +218,16 @@ def pipeline_app(image: Union[np.ndarray, str], hdt: HandDetector,
     # load image
     image = get_img_ndarray(image)
     if image is None:
-        msg = f"[PIPE-WARN] - (1) - failed to pass pipeline_base. By: failed to load image"
-        print(msg)
-        return
-
-    # process image
-    image = roi_normalize(image, hdt)
-    if image is None:
-        msg = f"[PIPE-WARN] - (2) - failed to pass pipeline_base. By: failed to get norm_hand"
+        msg = f"[PIPE-WARN] - (1) - failed to pass pipeline_app. By: failed to load image"
         print(msg)
         return
 
     image = bg_normalize(image, bgr)
+
+    if not has_single_hand(image, hdt):
+        msg = f"[PIPE-WARN] - (2) - failed to pass pipeline_app. By: can't detect any hand after bg_remove"
+        print(msg)
+        return
 
     image = illumination_normalize(image)
     image = channel_normalize(image)

@@ -18,6 +18,7 @@ from image_pipeline import *
 import tensorflow as tf
 from typing import Union
 import os
+from string import ascii_uppercase
 
 
 def update_screen(frame: np.ndarray, window_name=''):
@@ -30,13 +31,10 @@ def get_norm_hand_in_frame(hand_roi: np.ndarray,
     if norm_hand is None:
         return
 
-    # show_img(norm_hand, 'norm-hand')
-    save_hand(norm_hand, prefix='norm-hand')
-
     return norm_hand
 
 
-def detect_hand_in_frame(frame: np.ndarray, padding=30) -> tuple:
+def detect_hand_in_frame(frame: np.ndarray, padding=70) -> tuple:
     """
     :param padding:
     :param frame:
@@ -55,18 +53,25 @@ def detect_hand_in_frame(frame: np.ndarray, padding=30) -> tuple:
 
     roi_annotated_frame = cv2.flip(roi_annotated_frame, 1)
 
-    hand_roi = fetch_single_hand_roi(frame, hdt, padding=60)
+    hand_roi = fetch_single_hand_roi(frame, hdt, padding=padding)
     # save_hand_roi(hand_roi)
     # show_img(hand_roi, 'hand_roi')
 
     return True, roi_annotated_frame, hand_roi
 
 
-def translate(norm_hand: np.ndarray):
-    # show_img(norm_hand, str(norm_hand.shape))
+def translate(hand: dict):
+    norm_hand_raw = 
     norm_hand = np.expand_dims(norm_hand, 0)
-    print(norm_hand.shape)
 
+    pred_cls_idx = np.argmax(model.predict([norm_hand]), -1)[0]
+
+    alphabet = ascii_uppercase[pred_cls_idx]
+    print(f"[VITAL] - Translate -> {alphabet}")
+
+    save_alphabet(norm_hand_raw, alphabet)
+
+    return alphabet
 
 
 def get_display_frame_from_raw(raw_frame: np.ndarray):
@@ -79,6 +84,8 @@ def main():
     vs.start()
     time.sleep(2.0)
 
+    last_alphabet = None
+
     cv2.startWindowThread()
     while flag:
 
@@ -88,6 +95,7 @@ def main():
 
         frame = imutils.resize(frame, width=800)  # save this for prediction
         display_frame = get_display_frame_from_raw(frame)
+        update_screen(display_frame, M_SCREEN_NAME)
 
         norm_hand = None
         detect_result, hand_roi_annotated_frame, hand_roi = detect_hand_in_frame(frame)
@@ -95,12 +103,18 @@ def main():
             display_frame = hand_roi_annotated_frame
             update_screen(display_frame, M_SCREEN_NAME)
 
+            hand = dict()
+            hand['roi'] = hand_roi
             norm_hand = get_norm_hand_in_frame(hand_roi, hdt, bgr)
+            if norm_hand is not None:
+                hand['norm'] = norm_hand
+                last_alphabet = translate(hand)
 
-        if norm_hand is not None:
-            translate(norm_hand)
+        if last_alphabet:
+            text = f"Alphabet : {last_alphabet}"
+        else:
+            text = f"Alphabet : "
 
-        text = 'display frame'
         display_frame = add_text_in_frame(display_frame, text)
         # save_frame(frame)
         # save_display_frame(display_frame)
@@ -141,5 +155,5 @@ if __name__ == '__main__':
     msg = f"[INFO] - Detectors loaded"
     print(msg)
 
-    remove_old_images()
+    # remove_old_images()
     main()

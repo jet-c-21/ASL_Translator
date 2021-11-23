@@ -38,3 +38,9 @@ def save_hand(img: np.ndarray, rtk_len=3, prefix=''):
 
     cv2.imwrite(img_path, img)
     print(f"[INFO] - Image : {img_path} saved")
+
+
+def save_alphabet(norm_hand: np.ndarray, alphabet: str, rtk_len=6):
+    img_path = f"{img_dir}/pred/{alphabet}-{gen_random_token(rtk_len)}.jpg"
+    cv2.imwrite(img_path, norm_hand)
+    print(f"[INFO] - Alphabet : {img_path} saved")
