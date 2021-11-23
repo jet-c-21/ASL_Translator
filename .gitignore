@@ -4,6 +4,7 @@
 README.md.backup
 kite_tutorial.ipynb
 *.zip
+.DS_store
 
 # model
 ASLT-Model/*
@@ -30,6 +31,7 @@ TEST_DATASET_A_AP/*
 kaggle-ref/asl_alphabet_train
 kaggle-ref/asl_alphabet_test
 kaggle-ref/kaggle.zip
+img_from_cam/*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

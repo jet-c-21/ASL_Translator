@@ -21,18 +21,20 @@ def remove_old_images():
 def save_frame(img: np.ndarray, rtk_len=3):
     img_path = f"{img_dir}/frame/{gen_random_token(rtk_len)}.jpg"
     cv2.imwrite(img_path, img)
+    print(f"frame: {img_path} saved")
 
 
 def save_display_frame(img: np.ndarray, rtk_len=3):
     img_path = f"{img_dir}/display/{gen_random_token(rtk_len)}.jpg"
     cv2.imwrite(img_path, img)
+    print(f"display frame: {img_path} saved")
 
 
 def save_hand(img: np.ndarray, rtk_len=3, prefix=''):
     if prefix:
         img_path = f"{img_dir}/hand_roi/{prefix}_{gen_random_token(rtk_len)}.jpg"
     else:
-        img_path = f"{img_dir}/hand_roi/{prefix}_{gen_random_token(rtk_len)}.jpg"
+        img_path = f"{img_dir}/hand_roi/{gen_random_token(rtk_len)}.jpg"
 
     cv2.imwrite(img_path, img)
     print(f"[INFO] - Image : {img_path} saved")
