@@ -61,8 +61,8 @@ def detect_hand_in_frame(frame: np.ndarray, padding=70) -> tuple:
 
 
 def translate(hand: dict):
-    norm_hand_raw = 
-    norm_hand = np.expand_dims(norm_hand, 0)
+    norm_hand_raw = hand['norm'].copy()
+    norm_hand = np.expand_dims(norm_hand_raw, 0)
 
     pred_cls_idx = np.argmax(model.predict([norm_hand]), -1)[0]
 
@@ -70,6 +70,8 @@ def translate(hand: dict):
     print(f"[VITAL] - Translate -> {alphabet}")
 
     save_alphabet(norm_hand_raw, alphabet)
+    hand['alphabet'] = alphabet
+    save_hand(hand)
 
     return alphabet
 
@@ -109,6 +111,7 @@ def main():
             if norm_hand is not None:
                 hand['norm'] = norm_hand
                 last_alphabet = translate(hand)
+                #
 
         if last_alphabet:
             text = f"Alphabet : {last_alphabet}"

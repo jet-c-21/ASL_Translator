@@ -30,7 +30,7 @@ def save_display_frame(img: np.ndarray, rtk_len=3):
     print(f"display frame: {img_path} saved")
 
 
-def save_hand(img: np.ndarray, rtk_len=3, prefix=''):
+def save_roi(img: np.ndarray, rtk_len=3, prefix=''):
     if prefix:
         img_path = f"{img_dir}/hand_roi/{prefix}_{gen_random_token(rtk_len)}.jpg"
     else:
@@ -44,3 +44,16 @@ def save_alphabet(norm_hand: np.ndarray, alphabet: str, rtk_len=6):
     img_path = f"{img_dir}/pred/{alphabet}-{gen_random_token(rtk_len)}.jpg"
     cv2.imwrite(img_path, norm_hand)
     print(f"[INFO] - Alphabet : {img_path} saved")
+
+
+def save_hand(hand: dict, rtk_len=3):
+    roi = hand['roi']
+    norm_hand = hand['norm']
+    alphabet = hand['alphabet']
+    rt = gen_random_token(rtk_len)
+
+    roi_path = f"{img_dir}/pred/{alphabet}-roi-{rt}.jpg"
+    norm_path = f"{img_dir}/pred/{alphabet}-norm-{rt}.jpg"
+
+    cv2.imwrite(roi_path, roi)
+    cv2.imwrite(norm_path, norm_hand)
