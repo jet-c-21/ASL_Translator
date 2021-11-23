@@ -65,6 +65,7 @@ def draw_single_hand_roi(image: np.ndarray, hdt: HandDetector, padding=15) -> Un
         print(msg)
         return
 
+    image = cv2.flip(image, 1)
     x_min, x_max, y_min, y_max = _get_hand_roi_coord(image, hand_landmarks)
 
     annotated_img = image.copy()
@@ -72,6 +73,8 @@ def draw_single_hand_roi(image: np.ndarray, hdt: HandDetector, padding=15) -> Un
                   (x_min - padding, y_min - padding),
                   (x_max + padding, y_max + padding),
                   (0, 255, 0), 2)
+
+    annotated_img = cv2.flip(annotated_img, 1)
 
     return annotated_img
 

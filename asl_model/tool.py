@@ -21,3 +21,13 @@ all_models = {
     get_stn_a_model_8.__name__: get_stn_a_model_8,
     get_stn_a_model_9.__name__: get_stn_a_model_9,
 }
+
+def load_exist_model(model_dir_path: str):
+    """
+    Notes: model_dir_path is the path to the entire model folder, not checkpoint
+
+    :param model_dir_path:
+    :return:
+    """
+
+    return tf.keras.models.load_model(model_dir_path)

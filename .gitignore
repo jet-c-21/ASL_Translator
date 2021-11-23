@@ -5,6 +5,9 @@ README.md.backup
 kite_tutorial.ipynb
 *.zip
 
+# model
+ASLT-Model/*
+
 # image folder
 dataset1/*
 dataset1.zip
