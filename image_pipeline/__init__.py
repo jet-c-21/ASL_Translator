@@ -7,5 +7,5 @@ Create Date: 11/18/21
 from .preprocessing import BgRemover, remove_bg, HandDetector, grayscale, show_img, fetch_single_hand_roi, \
     get_img_ndarray
 # remember modify * before release
-from .general_pipeline import pipeline_base, pipeline_app
-from .training_pipeline import t_pipeline_a
+from .general_pipeline import pipeline_base, pipeline_app, pipeline_base_demo
+from .training_pipeline import t_pipeline_a, t_pipeline_a_demo

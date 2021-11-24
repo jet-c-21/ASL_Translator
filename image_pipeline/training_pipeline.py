@@ -16,6 +16,8 @@ from .general_pipeline import roi_normalize, bg_normalize, illumination_normaliz
 
 from tqdm import tqdm
 
+from cv2 import cv2
+
 
 def t_pipeline_a(image: Union[np.ndarray, str],
                  hdt: HandDetector, bgr: BgRemover, img_size=28) -> Union[np.ndarray, None]:
@@ -66,6 +68,93 @@ def t_pipeline_a(image: Union[np.ndarray, str],
     image = resolution_normalize(image, img_size)
 
     return image
+
+
+def t_pipeline_a_demo(image_path: str, hdt: HandDetector, bgr: BgRemover,
+                      img_size=28, s_dir='pipeline-demo') -> Union[np.ndarray, None]:
+    """
+    Background-Norm
+
+    *Hand-Detection-Filter
+
+    ROI-Norm
+
+    Illumination-Norm
+
+    Channel-Norm
+
+    Resolution-Norm
+
+    :param s_dir:
+    :param image_path:
+    :param hdt:
+    :param bgr:
+    :param img_size:
+    :return:
+    """
+    pipe_name = 't-pipeline'
+    image_name = image_path.split('/')[-1].split('.')[0]
+
+    # load image
+    phase_idx = 0
+    phase = 'raw'
+    image_raw = get_img_ndarray(image_path)
+    if image_raw is None:
+        msg = f"[PIPE-WARN] - (1) - failed to pass pipeline_base. By: failed to load image"
+        print(msg)
+        return
+    image_sp = f"{s_dir}/{pipe_name}-{image_name}-phase{phase_idx}-{phase}.jpg"
+    cv2.imwrite(image_sp, image_raw)
+
+    # bg norm
+    phase_idx = 1
+    phase = 'bg-norm'
+    image = bg_normalize(image_raw, bgr)
+    if not has_single_hand(image, hdt):
+        msg = f"[PIPE-WARN] - (3) - failed to pass pipeline_base. By: can't detect any hand in the image, after bg_norm"
+        print(msg)
+        return
+    image_sp = f"{s_dir}/{pipe_name}-{image_name}-phase{phase_idx}-{phase}.jpg"
+    cv2.imwrite(image_sp, image)
+
+    if not has_single_hand(image, hdt):
+        msg = f"[PIPE-WARN] - failed to pass t_pipeline_a. By: can't detect any hand after bg_remove"
+        print(msg)
+        return
+
+    # roi norm
+    phase_idx = 2
+    phase = 'roi-norm'
+    image = roi_normalize(image, hdt)
+    if image is None:
+        msg = f"[PIPE-WARN] - failed to pass t_pipeline_a. By: failed to get after bg_remove"
+        print(msg)
+        return
+    image_sp = f"{s_dir}/{pipe_name}-{image_name}-phase{phase_idx}-{phase}.jpg"
+    cv2.imwrite(image_sp, image)
+
+    # skin norm
+    phase_idx = 3
+    phase = 'skin-norm'
+    image = illumination_normalize(image)
+    image_sp = f"{s_dir}/{pipe_name}-{image_name}-phase{phase_idx}-{phase}.jpg"
+    cv2.imwrite(image_sp, image)
+
+    # channel norm
+    phase_idx = 4
+    phase = 'channel-norm'
+    image = channel_normalize(image)
+    image_sp = f"{s_dir}/{pipe_name}-{image_name}-phase{phase_idx}-{phase}.jpg"
+    cv2.imwrite(image_sp, image)
+
+    # size norm
+    phase_idx = 5
+    phase = 'size-norm'
+    norm_hand = resolution_normalize(image, img_size)
+    image_sp = f"{s_dir}/{pipe_name}-{image_name}-phase{phase_idx}-{phase}.jpg"
+    cv2.imwrite(image_sp, norm_hand)
+
+    return norm_hand
 
 
 def t_pipeline_with_da_1(image: Union[np.ndarray, str], hdt: HandDetector, bgr: BgRemover, img_size=28):

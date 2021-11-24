@@ -1,6 +1,8 @@
 # coding: utf-8
 from typing import Union
 import numpy as np
+from cv2 import cv2
+import os
 
 from image_pipeline.preprocessing.ult import get_img_ndarray, show_img
 from .preprocessing import fetch_single_hand_roi, rgb_to_hsv, grayscale, resize, bg_normalization_red_channel, \
@@ -192,6 +194,88 @@ def pipeline_base(image: Union[np.ndarray, str], hdt: HandDetector,
     image = resolution_normalize(image, img_size)
 
     return image
+
+
+def pipeline_base_demo(image_path: str, hdt: HandDetector,
+                       bgr: BgRemover, img_size=28, s_dir='pipeline-demo') -> Union[np.ndarray, None]:
+    """
+    ROI-Norm
+
+    Background-Norm
+
+    *Hand-Detection-Filter
+
+    Illumination-Norm
+
+    Channel-Norm
+
+    Resolution-Norm
+
+    :param image_path:
+    :param s_dir:
+    :param hdt:
+    :param bgr:
+    :param img_size:
+    :return: Union[np.ndarray, None]
+    """
+    pipe_name = 'pipeline-base'
+    image_name = image_path.split('/')[-1].split('.')[0]
+
+    # load image
+    phase_idx = 0
+    phase = 'raw'
+    image_raw = get_img_ndarray(image_path)
+    if image_raw is None:
+        msg = f"[PIPE-WARN] - (1) - failed to pass pipeline_base. By: failed to load image"
+        print(msg)
+        return
+    image_sp = f"{s_dir}/{pipe_name}-{image_name}-phase{phase_idx}-{phase}.jpg"
+    cv2.imwrite(image_sp, image_raw)
+
+    # process image
+    phase_idx = 1
+    phase = 'hand-roi'
+    hand_roi = roi_normalize(image_raw, hdt)
+    if hand_roi is None:
+        msg = f"[PIPE-WARN] - (2) - failed to pass pipeline_base. By: failed to get norm_hand"
+        print(msg)
+        return
+    image_sp = f"{s_dir}/{pipe_name}-{image_name}-phase{phase_idx}-{phase}.jpg"
+    cv2.imwrite(image_sp, hand_roi)
+
+    # bg norm
+    phase_idx = 2
+    phase = 'bg-norm'
+    hand_roi_bgr = bg_normalize(hand_roi, bgr)
+    if not has_single_hand(hand_roi_bgr, hdt):
+        msg = f"[PIPE-WARN] - (3) - failed to pass pipeline_base. By: can't detect any hand in the image, after bg_norm"
+        print(msg)
+        return
+    image_sp = f"{s_dir}/{pipe_name}-{image_name}-phase{phase_idx}-{phase}.jpg"
+    cv2.imwrite(image_sp, hand_roi_bgr)
+
+    # skin norm
+    phase_idx = 3
+    phase = 'skin-norm'
+    hand_roi_bgr_skin = illumination_normalize(hand_roi_bgr)
+    image_sp = f"{s_dir}/{pipe_name}-{image_name}-phase{phase_idx}-{phase}.jpg"
+    cv2.imwrite(image_sp, hand_roi_bgr_skin)
+
+    # channel norm
+    phase_idx = 4
+    phase = 'channel-norm'
+    hand_roi_bgr_skin_c_size = channel_normalize(hand_roi_bgr_skin)
+    image_sp = f"{s_dir}/{pipe_name}-{image_name}-phase{phase_idx}-{phase}.jpg"
+    cv2.imwrite(image_sp, hand_roi_bgr_skin_c_size)
+
+    # size norm
+    phase_idx = 5
+    phase = 'size-norm'
+    norm_hand = resolution_normalize(hand_roi_bgr_skin_c_size)
+    image_sp = f"{s_dir}/{pipe_name}-{image_name}-phase{phase_idx}-{phase}.jpg"
+    cv2.imwrite(image_sp, norm_hand)
+
+    return norm_hand
 
 
 def pipeline_app(image: Union[np.ndarray, str], hdt: HandDetector,

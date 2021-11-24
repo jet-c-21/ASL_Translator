@@ -16,12 +16,12 @@ pandas
 tensorflow
 
 
-# visualization
+# visualization and evaluation report
 plotly
 nbformat
 matplotlib
 seaborn
-
+scikit-learn
 
 # image
 imutils

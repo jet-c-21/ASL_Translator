@@ -3,10 +3,16 @@
 ![ASL Schematic Diagram](https://i.imgur.com/mq20CVv.png)
 
 ## Dataset
-- [dataset1](https://www.kaggle.com/grassknoted/asl-alphabet), [Google Drive](https://drive.google.com/file/d/1FpYkbhAb7fX1z_ygNA1i__av2h6uAkUd/view?usp=sharing)
-- [dataset2](https://www.kaggle.com/prathumarikeri/american-sign-language-09az)
-- [dataset3](https://www.kaggle.com/debashishsau/aslamerican-sign-language-aplhabet-dataset)
-- [dataset4](https://www.kaggle.com/danrasband/asl-alphabet-test)
+In this project, we create our own dataset by arranging the data from [Kaggle.com](https://www.kaggle.com/). We named this hybrid data with following dataset below:
+
+- [dataset1](https://www.kaggle.com/grassknoted/asl-alphabet), [Google Drive](https://drive.google.com/file/d/1BaOibzn64d_DOrXczXhOJEvOMey6A-c-/view?usp=sharing)
+- [dataset2](https://www.kaggle.com/prathumarikeri/american-sign-language-09az), [Google Drive](https://drive.google.com/file/d/1WJS6IuX9dOMcb7wh-9Ve7HG-V5L3n8qm/view?usp=sharing)
+- [dataset3](https://www.kaggle.com/debashishsau/aslamerican-sign-language-aplhabet-dataset), [Google Drive](https://drive.google.com/file/d/103V_z3YRq9TuUF023i465i0UGyY2BB8F/view?usp=sharing)
+- [dataset4](https://www.kaggle.com/danrasband/asl-alphabet-test), [Google Drive](https://drive.google.com/file/d/103V_z3YRq9TuUF023i465i0UGyY2BB8F/view?usp=sharing)
+
+### Structure of Dataset-A
+#### Training Data
+
 
 ## Environment
 ```

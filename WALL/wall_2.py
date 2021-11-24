@@ -7,3 +7,5 @@ Create Date: 11/21/21
 import string
 
 
+import os
+print(os.path.splitext("/path/to/some/file.txt.zip.asc")[0])
