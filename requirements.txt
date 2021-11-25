@@ -1,3 +1,8 @@
+# basic tool
+tqdm
+memory_profiler
+
+
 # jupyter
 ipykernel
 
@@ -7,17 +12,30 @@ numpy
 pandas
 
 
-# visualization
+# model training
+tensorflow
+
+
+# visualization and evaluation report
 plotly
+kaleido
 nbformat
 matplotlib
 seaborn
-
+scikit-learn
 
 # image
 imutils
 opencv-contrib-python
+mediapipe
+scikit-image
+rembg
+numpy==1.20.3 # restricted by rembg
 
 
-# basic tool
-tqdm
+# google-drive connection
+gdown
+google-api-python-client
+
+
+

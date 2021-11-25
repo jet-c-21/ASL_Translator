@@ -1,9 +1,37 @@
 # Customerization
-dataset1/*
 .idea
 .virtual_documents
 README.md.backup
+kite_tutorial.ipynb
+*.zip
+.DS_store
 
+# model
+ASLT-Model/*
+
+# image folder
+dataset1/*
+dataset1.zip
+dataset2/*
+dataset2.zip
+dataset2-53K/*
+dataset2-53K.zip
+dataset3/*
+dataset3.zip
+dataset3-206K/*
+dataset3-206K.zip
+dataset4/*
+dataset4.zip
+DATASET_A/*
+DATASET_A_AP/*
+TRAIN_DATASET_A/*
+TRAIN_DATASET_A_AP/*
+TEST_DATASET_A/*
+TEST_DATASET_A_AP/*
+kaggle-ref/asl_alphabet_train
+kaggle-ref/asl_alphabet_test
+kaggle-ref/kaggle.zip
+img_from_cam/*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
