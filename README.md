@@ -1,18 +1,27 @@
 # ASL Translator
 
-![ASL Schematic Diagram](https://i.imgur.com/mq20CVv.png)
+![ASL Schematic Diagram](https://i.imgur.com/1Kz743O.jpg)
 
 ## Dataset
-In this project, we create our own dataset by arranging the data from [Kaggle.com](https://www.kaggle.com/). We named this hybrid data with following dataset below:
-
+### Original Data on Kaggle
+ 
+In this project, we create our own dataset, the Dataset-A, by arranging the following data from [Kaggle.com](https://www.kaggle.com/):
 - [dataset1](https://www.kaggle.com/grassknoted/asl-alphabet), [Google Drive](https://drive.google.com/file/d/1BaOibzn64d_DOrXczXhOJEvOMey6A-c-/view?usp=sharing)
 - [dataset2](https://www.kaggle.com/prathumarikeri/american-sign-language-09az), [Google Drive](https://drive.google.com/file/d/1WJS6IuX9dOMcb7wh-9Ve7HG-V5L3n8qm/view?usp=sharing)
 - [dataset3](https://www.kaggle.com/debashishsau/aslamerican-sign-language-aplhabet-dataset), [Google Drive](https://drive.google.com/file/d/103V_z3YRq9TuUF023i465i0UGyY2BB8F/view?usp=sharing)
 - [dataset4](https://www.kaggle.com/danrasband/asl-alphabet-test), [Google Drive](https://drive.google.com/file/d/103V_z3YRq9TuUF023i465i0UGyY2BB8F/view?usp=sharing)
 
-### Structure of Dataset-A
-#### Training Data
+### Dataset-A
+We want to challenge if our model is general and robust or not, so we build this hybrid dataset.
 
+### Structure of Dataset-A
+In both train data and test data, they contain alphabet A to Z, 26 classes folder of right hand image instances data.
+#### Training Data
+- All data are the subset of **dataset1**
+- We get rid of some images that cannot pass our image-pipeline in dataset1
+- The image count for each alphabet is approximately to the amount 2220. 
+- Here's the chart of our image count distribution in Dataset-A training set:
+![image count distribution in Dataset-A training set](https://i.imgur.com/SApucwT.png)
 
 ## Environment
 ```
