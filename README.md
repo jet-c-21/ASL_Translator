@@ -13,7 +13,9 @@ In this project, we create our own dataset, the Dataset-A, by arranging the foll
 
 ## Dataset-A
 We want to challenge if our model is general and robust or not, so we build this hybrid dataset.
-
+Links for download:
+- [raw images](https://drive.google.com/file/d/1q1IjtWrWjWfJSUG55s1SN0w3bOTuG7cV/view?usp=sharing)
+- [images after pipeline](https://drive.google.com/file/d/1TKh-0eYwWLF41tfCfykCuvBVpSY7Fj4k/view?usp=sharing) 
 ### Structure of Dataset-A
 In both train data and test data, they contain alphabet A to Z, 26 classes folder of right hand image instances data.
 ### Training Data
@@ -62,6 +64,7 @@ This kind of pipeline can **only be used in training preprocessing stage**.
 2. Implement by ```keras.model.Engine```, we create our own Spatial Transformer Layer ```stn()```.
 
 ## b. Model Building
+You can download our models at here: [saved_models_v1](https://drive.google.com/file/d/1IxY66z9Oh6gtcW8sr1MjXr8sQx8-mi3E/view?usp=sharing)
 ### Normal Model - Pure CNN Structure without Spatial Transform Layers:
 The implement code is in ```asl_model/models.py```-```get_model_1()```
 ```python
