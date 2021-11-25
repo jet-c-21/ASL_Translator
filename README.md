@@ -1,6 +1,6 @@
 # ASL Translator
 
-![ASL Schematic Diagram](https://i.imgur.com/1Kz743O.jpg)
+![ASL Schematic Diagram](https://i.imgur.com/uY6KYo1.jpg)
 
 # Dataset
 ## Original Data on Kaggle
