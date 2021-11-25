@@ -161,7 +161,7 @@ metrics=["accuracy"]
 ![normal-model-epoch-acc-large](https://i.imgur.com/qFik5zr.png)
 ##### Epoch Loss
 ![normal-model-epoch-loss-small](https://i.imgur.com/IxoIkqo.png)
-![normal-model-epoch-loss-large](https://i.imgur.com/IxoIkqo.png)
+![normal-model-epoch-loss-large](https://i.imgur.com/CQIQMir.png)
 
 #### Testing Data
 ##### Total Accuracy : 89.4%
