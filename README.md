@@ -34,7 +34,64 @@ Here's the chart of our image count distribution in Dataset-A testing set:
 
 ## ASL Translate Model
 ### Normal Model - Pure CNN Structure without Spatial Transform Layers:
+The implement code is in ```asl_model/models.py```-```get_model_1()```
+```python
+model = models.Sequential()
+
+model.add(layers.Conv2D(32, (3, 3), strides=(1, 1), activation='relu', input_shape=(28, 28, 1)))
+model.add(layers.BatchNormalization())
+
+model.add(layers.MaxPool2D((2, 2)))
+
+model.add(layers.Conv2D(64, (3, 3), strides=(1, 1), activation='relu'))
+model.add(layers.Dropout(0.2))
+model.add(layers.BatchNormalization())
+
+model.add(layers.MaxPool2D((2, 2)))
+
+model.add(layers.Conv2D(128, (3, 3), strides=(1, 1), activation='relu'))
+model.add(layers.BatchNormalization())
+model.add(layers.MaxPool2D((2, 2)))
+
+# finish feature extraction
+model.add(layers.Flatten())
+
+model.add(layers.Dense(512, activation='relu'))
+model.add(layers.Dropout(0.25))
+
+model.add(layers.Dense(26, activation='softmax'))
+```
+
 ### STL Model - Spatial Transform Layer with CNN Structure
+The implement code is in ```asl_model/stl/struct_a/model.py```-```get_stn_a_model_8()```
+```python
+input_layers = layers.Input((size, size, 1))
+x = stn(input_layers)
+
+x = layers.Conv2D(32, (3, 3), strides=(1, 1), activation='relu',
+                  kernel_initializer=initializers.glorot_uniform(seed=STN_SEED))(x)
+x = layers.BatchNormalization()(x)
+
+x = layers.Conv2D(64, (3, 3), strides=(1, 1), activation='relu',
+                  kernel_initializer=initializers.glorot_uniform(seed=STN_SEED))(x)
+x = layers.BatchNormalization()(x)
+
+x = layers.Conv2D(128, (3, 3), strides=(1, 1), activation='relu',
+                  kernel_initializer=initializers.glorot_uniform(seed=STN_SEED))(x)
+x = layers.BatchNormalization()(x)
+
+x = layers.Flatten()(x)
+
+x = layers.Dense(512, activation='relu')(x)
+x = layers.Dropout(0.5)(x)
+
+x = layers.Dense(256, activation='relu')(x)
+x = layers.Dropout(0.25)(x)
+
+output_layers = layers.Dense(26, activation="softmax")(x)
+
+model = tf.keras.Model(input_layers, output_layers)
+```
 
 ## Getting Starting
 ### Environment
