@@ -165,7 +165,7 @@ metrics=["accuracy"]
 
 #### Testing Data
 ##### Total Accuracy : 89.4%
-![](https://i.imgur.com/8rDyP5x.jpg)
+![](https://i.imgur.com/EeUx1Oe.png)
 
 ##### F1-Score Report for each Alphabet:
 ![](https://i.imgur.com/o7RKV7F.png)
@@ -183,7 +183,7 @@ metrics=["accuracy"]
 ![](https://i.imgur.com/O9mPsLY.png)
 
 ##### F1-Score Report for each Alphabet:
-
+![](https://i.imgur.com/prlZFy2.png)
 
 **There are more evaluation charts in the folder ```charts```** 
 
