@@ -21,6 +21,7 @@ In both train data and test data, they contain alphabet A to Z, 26 classes folde
 - We get rid of some images that cannot pass our image-pipeline in dataset1
 - The image count for each alphabet is approximately to the amount 2220. 
 - Here's the chart of our image count distribution in Dataset-A training set:
+
 ![image count distribution in Dataset-A training set](https://i.imgur.com/SApucwT.png)
 
 ## Environment
