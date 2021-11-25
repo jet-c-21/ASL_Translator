@@ -18,6 +18,7 @@ tensorflow
 
 # visualization and evaluation report
 plotly
+kaleido
 nbformat
 matplotlib
 seaborn
