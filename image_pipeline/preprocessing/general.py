@@ -1,4 +1,11 @@
 # coding: utf-8
+
+"""
+author: Eugene Mondkar
+GitHub: https://github.com/EugeneMondkar
+Create Date: 11/17/21
+"""
+
 from cv2 import cv2
 import numpy as np
 import imutils
