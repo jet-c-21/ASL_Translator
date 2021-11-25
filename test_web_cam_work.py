@@ -3,6 +3,10 @@
 author: Jet Chien
 GitHub: https://github.com/jet-chien
 Create Date: 2021/11/23
+
+Based on work by Eugene Mondkar
+GitHub: https://github.com/EugeneMondkar
+Refer to Archive/Pipeline_Library/testbed_cam.py
 """
 import time
 from cv2 import cv2
