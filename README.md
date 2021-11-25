@@ -2,8 +2,8 @@
 
 ![ASL Schematic Diagram](https://i.imgur.com/1Kz743O.jpg)
 
-## Dataset
-### Original Data on Kaggle
+# Dataset
+## Original Data on Kaggle
  
 In this project, we create our own dataset, the Dataset-A, by arranging the following data from [Kaggle.com](https://www.kaggle.com/):
 - [dataset1](https://www.kaggle.com/grassknoted/asl-alphabet), [Google Drive](https://drive.google.com/file/d/1BaOibzn64d_DOrXczXhOJEvOMey6A-c-/view?usp=sharing)
@@ -11,12 +11,12 @@ In this project, we create our own dataset, the Dataset-A, by arranging the foll
 - [dataset3](https://www.kaggle.com/debashishsau/aslamerican-sign-language-aplhabet-dataset), [Google Drive](https://drive.google.com/file/d/103V_z3YRq9TuUF023i465i0UGyY2BB8F/view?usp=sharing)
 - [dataset4](https://www.kaggle.com/danrasband/asl-alphabet-test), [Google Drive](https://drive.google.com/file/d/103V_z3YRq9TuUF023i465i0UGyY2BB8F/view?usp=sharing)
 
-### Dataset-A
+## Dataset-A
 We want to challenge if our model is general and robust or not, so we build this hybrid dataset.
 
 ### Structure of Dataset-A
 In both train data and test data, they contain alphabet A to Z, 26 classes folder of right hand image instances data.
-#### Training Data
+### Training Data
 - All data are the subset of **dataset1**
 - We get rid of some images that cannot pass our image-pipeline in dataset1
 - The image count for each alphabet is approximately to the amount 2220. 
@@ -25,14 +25,43 @@ Here's the chart of our image count distribution in Dataset-A training set:
 
 ![image count distribution in Dataset-A training set](https://i.imgur.com/SApucwT.png)
 
-#### Testing Data
+### Testing Data
 - For each alphabet, we select 555 image instances (2220 * 0.2 = 555) from dataset2, dataset3 and dataset4
 
 Here's the chart of our image count distribution in Dataset-A testing set:
 
 ![image count distribution in Dataset-A testing set](https://i.imgur.com/n1hvHff.png)
 
-## ASL Translate Model
+# Methodology
+## a. Data Preprocessing
+The demo images are in the folder ```pipeline-demo```, the image file name prefix indicates the pipeline fucntion type
+
+### image-pipeline, with two different type
+#### I. General Pipeline: 
+This kind of pipeline can be used in any kinds of preprocessing stage.
+```
+// work flow
+1. roi normalization (by mediapipe)
+2. background normalization (by rembg)
+3. skin normalization
+4. channel normalization
+5. resolution normaliztion
+```
+#### II. Training Pipeline: 
+This kind of pipeline can **only be used in training preprocessing stage**.
+```
+// work flow
+1. background normalization (by rembg)
+2. roi normalization (by mediapipe)
+3. skin normalization
+4. channel normalization
+5. resolution normaliztion
+```
+### Data Augmentation
+1. Implement by ```keras.ImageDataGenerator``` with ```zoom_range=0.1,```, ```width_shift_range=0.1```, ```height_shift_range=0.1```, ```shear_range=0.1```
+2. Implement by ```keras.model.Engine```, we create our own Spatial Transformer Layer ```stn()```.
+
+## b. Model Building
 ### Normal Model - Pure CNN Structure without Spatial Transform Layers:
 The implement code is in ```asl_model/models.py```-```get_model_1()```
 ```python
@@ -92,6 +121,67 @@ output_layers = layers.Dense(26, activation="softmax")(x)
 
 model = tf.keras.Model(input_layers, output_layers)
 ```
+## c. Model Training
+#### Basic
+- 57717 train images, 20% will become the validation data
+- 14430 test image, 555 test images for each alphabet
+
+#### First, data-structure-selection
+Select the best structure for normal-model and stl-model. With following hyper-parameters:
+```python
+lr = 0.001
+epoch = 10
+batch_size = 128
+
+optimizer=tf.keras.optimizers.Adam(learning_rate = lr),
+loss='categorical_crossentropy',
+metrics=['accuracy']
+```
+
+#### Second, use callback function to train the best model of each type. With following settings:
+```python
+BATCH = 128
+EPOCH = 100 # max epoch
+
+# call back functions
+es_callback = tf.keras.callbacks.EarlyStopping(patience=5, restore_best_weights=True)
+reduce_lr_callback = tf.keras.callbacks.ReduceLROnPlateau()
+
+loss="categorical_crossentropy" 
+optimizer="adam" 
+metrics=["accuracy"]
+```
+
+## d. Model Evaluation
+
+### Normal Model
+#### Validation Data
+##### Epoch Accuracy
+![normal-model-epoch-acc-small](https://i.imgur.com/W6xqVVh.png)
+![normal-model-epoch-acc-large](https://i.imgur.com/qFik5zr.png)
+##### Epoch Loss
+![normal-model-epoch-loss-small](https://i.imgur.com/IxoIkqo.png)
+![normal-model-epoch-loss-large](https://i.imgur.com/IxoIkqo.png)
+
+#### Testing Data
+##### Total Accuracy : 89.4%
+![](https://i.imgur.com/8rDyP5x.jpg)
+
+##### F1-Score Report for each Alphabet:
+
+
+### STL Model
+#### Validation Data
+##### Epoch Accuracy
+![STL-Model-epoch-acc-small](https://i.imgur.com/2PoSrNQ.png)
+![STL-Model-epoch-acc-large](https://i.imgur.com/6JpVShN.png)
+##### Epoch Loss
+![STL-Model-epoch-loss-small](https://i.imgur.com/l0IAuii.png)
+![STL-Model-epoch-loss-large](https://i.imgur.com/11UMAAD.png)
+
+
+
+
 
 ## Getting Starting
 ### Environment
