@@ -45,8 +45,8 @@ Type-B: this type of pipeline contains data augmentation structure
 """
 
 
-def roi_normalize(image: np.ndarray, hdt: HandDetector) -> Union[np.ndarray, None]:
-    hand_roi = fetch_single_hand_roi(image, hdt)  # with default padding 15
+def roi_normalize(image: np.ndarray, hdt: HandDetector, padding=15) -> Union[np.ndarray, None]:
+    hand_roi = fetch_single_hand_roi(image, hdt, padding=padding)  # with default padding 15
     if hand_roi is None:
         msg = f"[WARN] - roi-normalize failed. By: failed to fetch hand-roi."
         print(msg)
@@ -318,5 +318,50 @@ def pipeline_app(image: Union[np.ndarray, str], hdt: HandDetector,
     image = resolution_normalize(image, img_size)
 
     return image
+
+
+def pipeline_for_demo(image: Union[np.ndarray, str], hdt: HandDetector,
+                      bgr: BgRemover, img_size=28, padding=70) -> Union[np.ndarray, None]:
+    # load image
+    image_raw = get_img_ndarray(image)
+    if image_raw is None:
+        msg = f"[PIPE-WARN] - (1) - failed to pass pipeline_base. By: failed to load image"
+        print(msg)
+        return
+
+    try:
+        norm_hand = None
+        hand_roi = roi_normalize(image_raw, hdt, padding=padding)
+        hand_roi = bg_normalize(hand_roi, bgr)
+        if has_single_hand(hand_roi, hdt):
+            norm_hand = scr_norm(hand_roi, img_size)
+        if norm_hand is not None:
+            return norm_hand
+    except Exception as e:
+        print('case 1 failed')
+
+    try:
+        norm_hand = None
+        hand_roi = bg_normalize(image_raw, bgr)
+        hand_roi = roi_normalize(hand_roi, hdt, padding=padding)
+        if has_single_hand(hand_roi, hdt):
+            norm_hand = scr_norm(hand_roi, img_size)
+        if norm_hand is not None:
+            return norm_hand
+    except Exception as e:
+        print('case 2 failed')
+
+    hand_roi = bg_normalize(image_raw, bgr)
+    norm_hand = scr_norm(hand_roi, img_size)
+
+    return norm_hand
+
+
+def scr_norm(hand_roi: np.ndarray, image_size=28) -> np.ndarray:
+    hand_roi = illumination_normalize(hand_roi)
+    hand_roi = channel_normalize(hand_roi)
+    hand_roi = resolution_normalize(hand_roi, image_size)
+
+    return hand_roi
 
 # <<<<<<<<<<<< general pipeline template <<<<<<<<<<<<

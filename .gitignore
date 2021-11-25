@@ -32,6 +32,7 @@ Reference-Src-Code/kaggle-ref/asl_alphabet_train
 Reference-Src-Code/kaggle-ref/asl_alphabet_test
 Reference-Src-Code/kaggle-ref/kaggle.zip
 img_from_cam/*
+saved_model/*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
