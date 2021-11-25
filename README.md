@@ -168,7 +168,7 @@ metrics=["accuracy"]
 ![](https://i.imgur.com/EeUx1Oe.png)
 
 ##### F1-Score Report for each Alphabet:
-![](https://i.imgur.com/o7RKV7F.png)
+![](https://i.imgur.com/4XIAHfe.png)
 
 ### STL Model
 #### Validation Data
