@@ -2,7 +2,12 @@
 author: Jet Chien
 GitHub: https://github.com/jet-c-21
 Create Date: 11/18/21
+
+Based on work by Eugene Mondkar
+GitHub: https://github.com/EugeneMondkar
+Refer to Archive/Pipeline_Library/Pipeline.py
 """
+
 # coding: utf-8
 from typing import Union
 
