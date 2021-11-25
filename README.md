@@ -20,10 +20,20 @@ In both train data and test data, they contain alphabet A to Z, 26 classes folde
 - All data are the subset of **dataset1**
 - We get rid of some images that cannot pass our image-pipeline in dataset1
 - The image count for each alphabet is approximately to the amount 2220. 
-- Here's the chart of our image count distribution in Dataset-A training set:
-<br>![image count distribution in Dataset-A training set](https://i.imgur.com/SApucwT.png)
 
-## Environment
+Here's the chart of our image count distribution in Dataset-A training set:
+
+![image count distribution in Dataset-A training set](https://i.imgur.com/SApucwT.png)
+
+#### Testing Data
+- For each alphabet, we select 555 image (2220 * 0.2 = 555) instances from dataset2, dataset3 and dataset4
+
+Here's the chart of our image count distribution in Dataset-A testing set:
+
+![image count distribution in Dataset-A testing set](https://i.imgur.com/n1hvHff.png)
+
+#### Environment
+
 ```
 conda create --name aslt python=3.8 -y
 ```
