@@ -26,24 +26,29 @@ Here's the chart of our image count distribution in Dataset-A training set:
 ![image count distribution in Dataset-A training set](https://i.imgur.com/SApucwT.png)
 
 #### Testing Data
-- For each alphabet, we select 555 image (2220 * 0.2 = 555) instances from dataset2, dataset3 and dataset4
+- For each alphabet, we select 555 image instances (2220 * 0.2 = 555) from dataset2, dataset3 and dataset4
 
 Here's the chart of our image count distribution in Dataset-A testing set:
 
 ![image count distribution in Dataset-A testing set](https://i.imgur.com/n1hvHff.png)
 
-#### Environment
+## ASL Translate Model
+### Normal Model - Pure CNN Structure without Spatial Transform Layers:
+### STL Model - Spatial Transform Layer with CNN Structure
 
+## Getting Starting
+### Environment
 ```
 conda create --name aslt python=3.8 -y
 ```
+(Options) - If you want to use jupyter run these commands
 ```
 // actactivate venv
 pip install ipykernel
 python -m ipykernel install --user --name aslt --display-name "ASLT"
 ```
 
-### initialize from package ```rembg```
+### install Pytorch for package [rembg](https://github.com/danielgatis/rembg)
 1. get pyTorch install instructions on [pytorch.org](https://pytorch.org/)
 For example:
 ```
