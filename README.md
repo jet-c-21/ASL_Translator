@@ -168,7 +168,7 @@ metrics=["accuracy"]
 ![](https://i.imgur.com/8rDyP5x.jpg)
 
 ##### F1-Score Report for each Alphabet:
-
+![](https://i.imgur.com/o7RKV7F.png)
 
 ### STL Model
 #### Validation Data
@@ -178,7 +178,14 @@ metrics=["accuracy"]
 ##### Epoch Loss
 ![STL-Model-epoch-loss-small](https://i.imgur.com/l0IAuii.png)
 ![STL-Model-epoch-loss-large](https://i.imgur.com/11UMAAD.png)
+#### Testing Data
+##### Total Accuracy : 90.6%
+![](https://i.imgur.com/O9mPsLY.png)
 
+##### F1-Score Report for each Alphabet:
+
+
+**There are more evaluation charts in the folder ```charts```** 
 
 
 
