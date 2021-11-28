@@ -157,40 +157,49 @@ metrics=["accuracy"]
 
 ## d. Model Evaluation
 
-### Normal Model
-#### Validation Data
-##### Epoch Accuracy
+### Normal Model 
+#### Validation Data - Epoch Accuracy
+- Train : 0.9917 (Orange)
+- Valid : 0.9864 (Blue)
+<br><br>
 ![normal-model-epoch-acc-small](https://i.imgur.com/W6xqVVh.png)
 ![normal-model-epoch-acc-large](https://i.imgur.com/qFik5zr.png)
-##### Epoch Loss
+#### Validation Data - Epoch Loss
+- Train : 0.02555 (Orange)
+- Valid : 0.05084 (Blue)
+<br><br>
 ![normal-model-epoch-loss-small](https://i.imgur.com/IxoIkqo.png)
 ![normal-model-epoch-loss-large](https://i.imgur.com/CQIQMir.png)
-
-#### Testing Data
-##### Total Accuracy : 89.4%
+ 
+#### Testing Data - Total Accuracy : 89.4%
 ![](https://i.imgur.com/EeUx1Oe.png)
 
-##### F1-Score Report for each Alphabet:
+#### Testing Data - F1-Score Report:
 ![](https://i.imgur.com/4XIAHfe.png)
 
 ### STL Model
-#### Validation Data
-##### Epoch Accuracy
+#### Validation Data -  Epoch Accuracy
+- Train : 0.9871 (Orange)
+- Valid : 0.9883 (Blue)
+<br><br>
 ![STL-Model-epoch-acc-small](https://i.imgur.com/2PoSrNQ.png)
 ![STL-Model-epoch-acc-large](https://i.imgur.com/6JpVShN.png)
-##### Epoch Loss
+
+#### Validation Data - Epoch Loss
+- Train : 0.05062 (Orange)
+- Valid : 0.04649 (Blue)
+<br><br>
 ![STL-Model-epoch-loss-small](https://i.imgur.com/l0IAuii.png)
 ![STL-Model-epoch-loss-large](https://i.imgur.com/11UMAAD.png)
-#### Testing Data
-##### Total Accuracy : 90.6%
+
+
+#### Testing Data - Total Accuracy : 90.6%
 ![](https://i.imgur.com/O9mPsLY.png)
 
-##### F1-Score Report for each Alphabet:
+#### Testing Data - F1-Score Report:
 ![](https://i.imgur.com/prlZFy2.png)
 
 **There are more evaluation charts in the folder ```charts```** 
-
-
 
 
 ## Getting Starting
