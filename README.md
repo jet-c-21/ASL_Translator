@@ -162,15 +162,15 @@ metrics=["accuracy"]
 - Train : 0.9917 (Orange)
 - Valid : 0.9864 (Blue)
 <br><br>
-![normal-model-epoch-acc-small](https://i.imgur.com/W6xqVVh.png)
-![normal-model-epoch-acc-large](https://i.imgur.com/qFik5zr.png)
+![normal-acc-s](https://i.imgur.com/2giV2ZN.jpg)
+![normal-acc-l](https://i.imgur.com/aZ7n8WP.jpg)
 #### Validation Data - Epoch Loss
 - Train : 0.02555 (Orange)
 - Valid : 0.05084 (Blue)
 <br><br>
-![normal-model-epoch-loss-small](https://i.imgur.com/IxoIkqo.png)
-![normal-model-epoch-loss-large](https://i.imgur.com/CQIQMir.png)
- 
+![normal-loss-s](https://i.imgur.com/7lWn4xj.jpg)
+![normal-loss-l](https://i.imgur.com/eiQQRF9.jpg)
+
 #### Testing Data - Total Accuracy : 89.4%
 ![](https://i.imgur.com/EeUx1Oe.png)
 
@@ -182,16 +182,15 @@ metrics=["accuracy"]
 - Train : 0.9871 (Orange)
 - Valid : 0.9883 (Blue)
 <br><br>
-![STL-Model-epoch-acc-small](https://i.imgur.com/2PoSrNQ.png)
-![STL-Model-epoch-acc-large](https://i.imgur.com/6JpVShN.png)
+![stl-acc-s](https://i.imgur.com/Cl2eP7L.jpg)
+![stl-acc-l](https://i.imgur.com/4r22ZgJ.jpg)
 
 #### Validation Data - Epoch Loss
 - Train : 0.05062 (Orange)
 - Valid : 0.04649 (Blue)
 <br><br>
-![STL-Model-epoch-loss-small](https://i.imgur.com/l0IAuii.png)
-![STL-Model-epoch-loss-large](https://i.imgur.com/11UMAAD.png)
-
+![stl-loss-s](https://i.imgur.com/WMfywmI.jpg)
+![stl-loss-l](https://i.imgur.com/PbrMH6q.jpg)
 
 #### Testing Data - Total Accuracy : 90.6%
 ![](https://i.imgur.com/O9mPsLY.png)
