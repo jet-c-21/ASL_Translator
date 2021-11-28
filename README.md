@@ -161,11 +161,13 @@ metrics=["accuracy"]
 #### Validation Data - Epoch Accuracy
 - Train : 0.9917 (Orange)
 - Valid : 0.9864 (Blue)
+<br><br>
 ![normal-model-epoch-acc-small](https://i.imgur.com/W6xqVVh.png)
 ![normal-model-epoch-acc-large](https://i.imgur.com/qFik5zr.png)
 #### Validation Data - Epoch Loss
 - Train : 0.02555 (Orange)
 - Valid : 0.05084 (Blue)
+<br><br>
 ![normal-model-epoch-loss-small](https://i.imgur.com/IxoIkqo.png)
 ![normal-model-epoch-loss-large](https://i.imgur.com/CQIQMir.png)
  
@@ -179,12 +181,14 @@ metrics=["accuracy"]
 #### Validation Data -  Epoch Accuracy
 - Train : 0.9871 (Orange)
 - Valid : 0.9883 (Blue)
+<br><br>
 ![STL-Model-epoch-acc-small](https://i.imgur.com/2PoSrNQ.png)
 ![STL-Model-epoch-acc-large](https://i.imgur.com/6JpVShN.png)
 
 #### Validation Data - Epoch Loss
 - Train : 0.05062 (Orange)
 - Valid : 0.04649 (Blue)
+<br><br>
 ![STL-Model-epoch-loss-small](https://i.imgur.com/l0IAuii.png)
 ![STL-Model-epoch-loss-large](https://i.imgur.com/11UMAAD.png)
 
