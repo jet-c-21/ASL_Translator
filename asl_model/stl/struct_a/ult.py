@@ -1,8 +1,8 @@
 # coding: utf-8
 """
-author: Jet Chien
-GitHub: https://github.com/jet-c-21
-Create Date: 11/22/21
+Author: https://github.com/sayakpaul
+The source code is taken reference from this project:
+https://github.com/sayakpaul/Spatial-Transformer-Networks-with-Keras/blob/main/STN.ipynb
 """
 import tensorflow as tf
 from tensorflow.keras import layers, models, initializers

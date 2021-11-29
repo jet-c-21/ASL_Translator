@@ -1,4 +1,9 @@
 # coding: utf-8
+"""
+Created by Eugene Mondkar
+GitHub: https://github.com/EugeneMondkar
+Refer to Archive/Pipeline_Library/Pipeline.py
+"""
 from cv2 import cv2
 import numpy as np
 import imutils
