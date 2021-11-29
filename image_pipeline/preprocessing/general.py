@@ -1,8 +1,7 @@
-# coding: utf-8
 """
-Created by Eugene Mondkar
+Author: Eugene Mondkar
 GitHub: https://github.com/EugeneMondkar
-Refer to Archive/Pipeline_Library/Pipeline.py
+Create Date: 11/17/21
 """
 from cv2 import cv2
 import numpy as np
