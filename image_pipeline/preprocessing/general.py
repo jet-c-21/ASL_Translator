@@ -1,11 +1,10 @@
 """
-author: Eugene Mondkar
+Author: Eugene Mondkar
 GitHub: https://github.com/EugeneMondkar
 Create Date: 11/17/21
 """
 
 # coding: utf-8
-
 from cv2 import cv2
 import numpy as np
 import imutils
