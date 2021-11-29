@@ -1,3 +1,9 @@
+"""
+author: Eugene Mondkar
+GitHub: https://github.com/EugeneMondkar
+Create Date: 11/17/21
+"""
+
 import Pipeline as pl
 import cv2
 
