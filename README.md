@@ -36,6 +36,7 @@ Here's the chart of our image count distribution in Dataset-A testing set:
 
 # Methodology
 ## a. Data Preprocessing
+![](https://i.imgur.com/NZ1UgBy.png)
 The demo images are in the folder ```pipeline-demo```, the image file name prefix indicates the pipeline fucntion type
 
 ### image-pipeline, with two different type
